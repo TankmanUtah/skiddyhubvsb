@@ -1,0 +1,1728 @@
+--https://github.com/Mokiros/roblox-FE-compatibility
+if game:GetService("RunService"):IsClient() then error("Script must be server-side in order to work; use h/ and not hl/") end
+local Player,game,owner = owner,game
+local RealPlayer = Player
+do
+	print("FE Compatibility code V2 by Mokiros")
+	local RealPlayer = RealPlayer
+	script.Parent = RealPlayer.Character
+
+	--Fake event to make stuff like Mouse.KeyDown work
+	local Disconnect_Function = function(this)
+		this[1].Functions[this[2]] = nil
+	end
+	local Disconnect_Metatable = {__index={disconnect=Disconnect_Function,Disconnect=Disconnect_Function}}
+	local FakeEvent_Metatable = {__index={
+		Connect = function(this,f)
+			local i = tostring(math.random(0,10000))
+			while this.Functions[i] do
+				i = tostring(math.random(0,10000))
+			end
+			this.Functions[i] = f
+			return setmetatable({this,i},Disconnect_Metatable)
+		end
+	}}
+	FakeEvent_Metatable.__index.connect = FakeEvent_Metatable.__index.Connect
+	local function fakeEvent()
+		return setmetatable({Functions={}},FakeEvent_Metatable)
+	end
+
+	--Creating fake input objects with fake variables
+    local FakeMouse = {Hit=CFrame.new(),KeyUp=fakeEvent(),KeyDown=fakeEvent(),Button1Up=fakeEvent(),Button1Down=fakeEvent(),Button2Up=fakeEvent(),Button2Down=fakeEvent()}
+    FakeMouse.keyUp = FakeMouse.KeyUp
+    FakeMouse.keyDown = FakeMouse.KeyDown
+	local UIS = {InputBegan=fakeEvent(),InputEnded=fakeEvent()}
+	local CAS = {Actions={},BindAction=function(self,name,fun,touch,...)
+		CAS.Actions[name] = fun and {Name=name,Function=fun,Keys={...}} or nil
+	end}
+	--Merged 2 functions into one by checking amount of arguments
+	CAS.UnbindAction = CAS.BindAction
+
+	--This function will trigger the events that have been :Connect()'ed
+	local function TriggerEvent(self,ev,...)
+		for _,f in pairs(self[ev].Functions) do
+			f(...)
+		end
+	end
+	FakeMouse.TriggerEvent = TriggerEvent
+	UIS.TriggerEvent = TriggerEvent
+
+	--Client communication
+	local Event = Instance.new("RemoteEvent")
+	Event.Name = "UserInput_Event"
+	Event.OnServerEvent:Connect(function(plr,io)
+	    if plr~=RealPlayer then return end
+		FakeMouse.Target = io.Target
+		FakeMouse.Hit = io.Hit
+		if not io.isMouse then
+			local b = io.UserInputState == Enum.UserInputState.Begin
+			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				return FakeMouse:TriggerEvent(b and "Button1Down" or "Button1Up")
+			end
+			if io.UserInputType == Enum.UserInputType.MouseButton2 then
+				return FakeMouse:TriggerEvent(b and "Button2Down" or "Button2Up")
+			end
+			for _,t in pairs(CAS.Actions) do
+				for _,k in pairs(t.Keys) do
+					if k==io.KeyCode then
+						t.Function(t.Name,io.UserInputState,io)
+					end
+				end
+			end
+			FakeMouse:TriggerEvent(b and "KeyDown" or "KeyUp",io.KeyCode.Name:lower())
+			UIS:TriggerEvent(b and "InputBegan" or "InputEnded",io,false)
+	    end
+	end)
+	Event.Parent = NLS([==[local Event = script:WaitForChild("UserInput_Event")
+	local Mouse = owner:GetMouse()
+	local UIS = game:GetService("UserInputService")
+	local input = function(io,RobloxHandled)
+		if RobloxHandled then return end
+		--Since InputObject is a client-side instance, we create and pass table instead
+		Event:FireServer({KeyCode=io.KeyCode,UserInputType=io.UserInputType,UserInputState=io.UserInputState,Hit=Mouse.Hit,Target=Mouse.Target})
+	end
+	UIS.InputBegan:Connect(input)
+	UIS.InputEnded:Connect(input)
+
+	local h,t
+	--Give the server mouse data every second frame, but only if the values changed
+	--If player is not moving their mouse, client won't fire events
+	local HB = game:GetService("RunService").Heartbeat
+	while true do
+		if h~=Mouse.Hit or t~=Mouse.Target then
+			h,t=Mouse.Hit,Mouse.Target
+			Event:FireServer({isMouse=true,Target=t,Hit=h})
+		end
+		--Wait 2 frames
+		for i=1,2 do
+			HB:Wait()
+		end
+	end]==],script)
+
+	----Sandboxed game object that allows the usage of client-side methods and services
+	--Real game object
+	local RealGame = game
+
+	--Metatable for fake service
+	local FakeService_Metatable = {
+		__index = function(self,k)
+			local s = rawget(self,"_RealService")
+			if s then
+				return typeof(s[k])=="function"
+				and function(_,...)return s[k](s,...)end or s[k]
+			end
+		end,
+		__newindex = function(self,k,v)
+			local s = rawget(self,"_RealService")
+			if s then s[k]=v end
+		end
+	}
+	local function FakeService(t,RealService)
+		t._RealService = typeof(RealService)=="string" and RealGame:GetService(RealService) or RealService
+		return setmetatable(t,FakeService_Metatable)
+	end
+
+	--Fake game object
+	local FakeGame = {
+		GetService = function(self,s)
+			return rawget(self,s) or RealGame:GetService(s)
+		end,
+		Players = FakeService({
+			LocalPlayer = FakeService({GetMouse=function(self)return FakeMouse end},Player)
+		},"Players"),
+		UserInputService = FakeService(UIS,"UserInputService"),
+		ContextActionService = FakeService(CAS,"ContextActionService"),
+		RunService = FakeService({
+			_btrs = {},
+			RenderStepped = RealGame:GetService("RunService").Heartbeat,
+			BindToRenderStep = function(self,name,_,fun)
+				self._btrs[name] = self.Heartbeat:Connect(fun)
+			end,
+			UnbindFromRenderStep = function(self,name)
+				self._btrs[name]:Disconnect()
+			end,
+		},"RunService")
+	}
+	rawset(FakeGame.Players,"localPlayer",FakeGame.Players.LocalPlayer)
+	FakeGame.service = FakeGame.GetService
+	FakeService(FakeGame,game)
+	--Changing owner to fake player object to support owner:GetMouse()
+	game,owner = FakeGame,FakeGame.Players.LocalPlayer
+end
+
+
+--[[Hell toast by vlad20020--
+    Im a bit crappy scripter but its ok.
+--]]
+plr = game.Players.LocalPlayer
+char = plr.Character
+ra = char["Right Arm"]
+la = char["Left Arm"]
+rl = char["Right Leg"]
+ll = char["Left Leg"]
+h = char.Head
+t = char.Torso
+mouse = plr:GetMouse()
+tweens = game:GetService("TweenService")
+print("Made by vlad20020")
+warn([[
+    Q - I still dont know how to name this attack
+    E - Toast smash
+    R - Just bit the toast
+    T - Dead sky
+    F - Punch
+    G - Stomp(Works only if dud stunned)
+    Z - Sit
+    X - Teleport
+    C - Crouch + Half invisiblity
+    V - *CrUnCh*
+    Y - Throw Toast(Heals)
+    N - Fix character
+    B - Summon an explosion(Aim)
+    H - Cut the throat(Target)
+    J - Kaboom!
+    U - Bread Grenade
+    N - Decapitate(Target)
+    M - T-Pose dance
+    1 - Randomly change music
+    Click - Slap]])
+---------------
+rs = t["Right Shoulder"]
+ls = t["Left Shoulder"]
+rh = t["Right Hip"]
+lh = t["Left Hip"]
+nec = t.Neck
+rut = char.HumanoidRootPart
+rutj = rut.RootJoint
+hum = char.Humanoid
+using = false
+eating = false
+it = Instance.new
+---I took it from shackluster`s script lol---
+------Part Creation------
+function CreatePart( parent, material, reflectance, transparency, brickcolor, name, size, anchor,cancollide)
+    local NEWPART = Instance.new("Part")
+    NEWPART.Reflectance = reflectance
+    NEWPART.Transparency = transparency
+    NEWPART.CanCollide = false
+    NEWPART.Locked = true
+    NEWPART.Anchored = true
+    NEWPART.CanCollide = cancollide
+    if anchor == false then
+        NEWPART.Anchored = false
+    end
+    NEWPART.BrickColor = BrickColor.new(tostring(brickcolor))
+    NEWPART.Name = name
+    NEWPART.Size = size
+    NEWPART.Position = t.Position
+    NEWPART.Material = material
+    NEWPART:BreakJoints()
+    NEWPART.Parent = parent
+    return NEWPART
+end
+------Mesh Creation------
+function createMesh(MESH, PARENT, MESHTYPE, MESHID, TEXTUREID, SCALE, OFFSET)
+    local NEWMESH = it(MESH)
+    if MESH == "SpecialMesh" then
+        NEWMESH.MeshType = MESHTYPE
+        if MESHID ~= "nil" and MESHID ~= "" then
+            NEWMESH.MeshId = "http://www.roblox.com/asset/?id="..MESHID
+        end
+        if TEXTUREID ~= "nil" and TEXTUREID ~= "" then
+            NEWMESH.TextureId = "http://www.roblox.com/asset/?id="..TEXTUREID
+        end
+    end
+    NEWMESH.Offset = OFFSET or Vector3.new(0, 0, 0)
+    NEWMESH.Scale = SCALE
+    NEWMESH.Parent = PARENT
+    return NEWMESH
+end
+------Weld Creation------
+function CreateWeld(Type, parent, part0, part1, C0, C1)
+    local newweld = Instance.new(Type)
+    newweld.Part0 = part0
+    newweld.Part1 = part1
+    newweld.C0 = C0
+    newweld.C1 = C1
+    newweld.Parent = parent
+    return newweld
+end
+---------Ragdoll--------
+at2 = t:findFirstChild("RightCollarAttachment") at2.Position = Vector3.new(1,.8,0)
+at = Instance.new("Attachment",ra) at.Name = "oof" at.Position = Vector3.new(-.5,.8,0)
+balls = Instance.new("BallSocketConstraint",ra) balls.Attachment0 = at2 balls.Attachment1 = at
+at21 = t:findFirstChild("LeftCollarAttachment") at21.Position = Vector3.new(-1,.8,0) at21.Orientation = Vector3.new(0,180,0)
+at1 = Instance.new("Attachment",la) at.Name = "oof" at1.Position = Vector3.new(.5,.8,0)
+balls1 = Instance.new("BallSocketConstraint",la) balls1.Attachment0 = at21 balls1.Attachment1 = at1
+nek = Instance.new("Attachment",h) nek.Position = Vector3.new(0,-.5,0) nball = Instance.new("BallSocketConstraint",h) nball.Attachment0 = nek nball.Attachment1 = t:findFirstChild("NeckAttachment")
+owihatedis = Instance.new("Attachment",t) owihatedis.Position = Vector3.new(.6,-1,0) oihd = Instance.new("Attachment",rl) oihd.Position = Vector3.new(.1,1,0) oww = Instance.new("BallSocketConstraint",rl) oww.Attachment0 = owihatedis oww.Attachment1 = oihd
+owihatedis2 = Instance.new("Attachment",t) owihatedis2.Position = Vector3.new(-.6,-1,0) oihd2 = Instance.new("Attachment",ll) oihd2.Position = Vector3.new(-.1,1,0) oww2 = Instance.new("BallSocketConstraint",ll) oww2.Attachment0 = owihatedis2 oww2.Attachment1 = oihd2
+hum.Died:connect(function()
+    mus:Destroy()
+    rut:Destroy()
+    local dying = Instance.new("Sound",char) dying.Volume = 5 dying.SoundId = "rbxassetid://475550904" dying:Play() hum.DisplayDistanceType = "None"
+    local boom = Instance.new("Explosion",char) boom.Position = t.Position h.face.Texture = "http://www.roblox.com/asset/?id=41679365" boom.BlastRadius = 1
+    ouch = Instance.new("Model",char) ouch1 = Instance.new("Part",ouch) ouch1.CFrame = h.CFrame ouch1.Size = Vector3.new(.4,.4,.4) ouch1.CanCollide = false ouch1.Name = "Head" ouch.Name = "OW"  ouch2 = Instance.new("Humanoid",ouch) ouch3 = Instance.new("Attachment",ouch1) ouch4 = Instance.new("BallSocketConstraint",ouch1) ouch4.Attachment0 = ouch3 ouch4.Attachment1 = h.FaceCenterAttachment
+end)
+----------------
+local a13 = Instance.new("Sound",t) a13.SoundId = "rbxassetid://0" a13.Looped = true a13.Volume = 0 a13:Play()
+local bochka = Instance.new("Sound",t) bochka.Looped = true bochka.SoundId = "rbxassetid://1287970292" bochka.Volume = 0 bochka:Play()
+local tripoloski = Instance.new("Sound",t) tripoloski.Looped = true tripoloski.SoundId = "rbxassetid://689628356" tripoloski.Volume = 0 tripoloski:Play()
+local cm = Instance.new("Sound",t) cm.Looped = true cm.EmitterSize = 30 cm.Volume = 0 cm.SoundId = "rbxassetid://213693358" cm:Play()
+hum.MaxHealth = "inf" hum.Health = "inf" ff = Instance.new("ForceField",char) ff.Visible = false char.Animate.idle.Animation2:Destroy()
+mus = Instance.new("Sound",t) mus.SoundId = "rbxassetid://1722896592" mus.Volume = 2 mus.Looped = true mus:Play()
+--------------
+brda = Instance.new("Part",char) brda.Transparency = 1 brda.CanCollide = false brda.Size = Vector3.new(1.248, 1.264, 0.16) brdam = Instance.new("SpecialMesh",brda) brdam.Scale = Vector3.new(0.003, 0.003, 0.003) brdam.MeshType = "FileMesh" brdam.MeshId = "rbxassetid://1614924885" brdam.TextureId = "rbxassetid://1614940093" brdaw = Instance.new("Weld",ra) brdaw.Part0 = ra brdaw.Part1 = brda brdaw.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,3) brdaw.C0 = brdaw.C0 * CFrame.new(0,1.3,0)
+------Uuhh... Idk--------
+mouse.KeyDown:connect(function(key)
+    if key == "q" and not using then
+        using = true
+    function die(hit)
+    if hit.Parent ~= nil then
+        local hum = hit.Parent:findFirstChildOfClass("Humanoid")
+        if hum ~= nil then
+    if hit.Parent == char then
+       
+        else
+            hit:Destroy()
+            end
+        end
+    end
+    end
+    aaa = Instance.new("Sound",t) aaa.SoundId = "rbxassetid://176238381" aaa.Volume = 2 aaa:Play()
+    bread = Instance.new("Part",workspace) bread.CanCollide = false bread.Anchored = true bread.Position = mouse.Hit.p bread.CFrame = bread.CFrame * CFrame.new(0,30,0) bread.Size = Vector3.new(15.6, 15.8, 4) bread.Orientation = Vector3.new(90, 180, 0)
+    bc = bread.Touched:connect(die)
+    bmesh = Instance.new("SpecialMesh",bread) bmesh.MeshType = "FileMesh" bmesh.MeshId = "rbxassetid://1614924885" bmesh.TextureId = "rbxassetid://1614940093" bmesh.Scale = Vector3.new(0.035, 0.035, 0.035)
+    hum.WalkSpeed = 0 hum.JumpPower = 0
+    for i = 1,10 do
+        bread.CFrame = bread.CFrame * CFrame.new(0,0,3)
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        wait()
+    end
+    for i = 1,30 do
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(1,1,1)
+        wait()
+    end
+aaa:Destroy()
+hum.WalkSpeed = 16 hum.JumpPower = 50
+rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+for i = 1,10 do
+    bread.Transparency = bread.Transparency + .1
+    wait()
+end
+    bread:Destroy()
+    wait(.1)
+    using = false
+    end
+end)
+----------Toast smash-----------
+mouse.KeyDown:connect(function(key)
+    if key == "e" and not using then
+        using = true
+        function die(hit)
+    if hit.Parent ~= nil then
+        local hum = hit.Parent:findFirstChildOfClass("Humanoid")
+        if hum ~= nil then
+    if hit.Parent == char then
+       
+    else
+            bd = Instance.new("Decal",hit) bd.Texture = "http://www.roblox.com/asset/?id=718043865" bd.Face = "Front"  bd.Transparency = .5
+        bd1 = Instance.new("Decal",hit) bd1.Texture = "http://www.roblox.com/asset/?id=718043865" bd1.Face = "Back" bd1.Transparency = .5
+        bd2 = Instance.new("Decal",hit) bd2.Texture = "http://www.roblox.com/asset/?id=718043865" bd2.Face = "Right" bd2.Transparency = .5
+        bd3 = Instance.new("Decal",hit) bd3.Texture = "http://www.roblox.com/asset/?id=718043865" bd3.Face = "Left" bd3.Transparency = .5
+        bd4 = Instance.new("Decal",hit) bd4.Texture = "http://www.roblox.com/asset/?id=718043865" bd4.Face = "Bottom" bd4.Transparency = .5
+        bd5 = Instance.new("Decal",hit) bd5.Texture = "http://www.roblox.com/asset/?id=718043865" bd5.Face = "Top" bd5.Transparency = .5
+            bme = Instance.new("SpecialMesh",hit) bme.MeshType = "Brick"
+            hit.Size = hit.Size * Vector3.new(1,.5,1)
+            for i = 1,10 do
+                hit.Transparency = hit.Transparency +.1
+                wait()
+            end
+            hit:Destroy()
+            end
+        end
+    end
+end
+        hum.WalkSpeed = 0 hum.JumpPower = 0
+        for i = 1,5 do
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.3,-.2,.6) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(-.3,.2,-.6) rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(-.07,0,0) rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.1) lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(0,0,.1)
+        wait()
+        end
+        han = Instance.new("Part",workspace) han.Size = Vector3.new(2,2,1) han.Transparency = 1 han.CanCollide = false hw = Instance.new("Weld",han) hw.Part0 = han hw.Part1 = t
+        mb = Instance.new("Part",workspace) mb.Transparency = 1 mb.CFrame = t.CFrame rut.Anchored = true  mb.Size = Vector3.new(15.6, 15.8, 2) mm = Instance.new("SpecialMesh",mb) mm.MeshType = "FileMesh" mm.MeshId = "rbxassetid://1614924885" mm.TextureId = "rbxassetid://1614940093" mm.Scale = Vector3.new(0.035, 0.035, 0.035) mw = Instance.new("Weld",mb) mw.Part0 = mb mw.Part1 = han mw.C0 = mw.C0 * CFrame.new(0,-20,0)
+        for i = 1,10 do
+            mb.Transparency = mb.Transparency -.1
+            wait()
+        end
+        mc = mb.Touched:connect(die)
+        for i = 1,5 do
+            rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(.2,0,0) rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(0,0,.24) lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.24) hw.C0 = hw.C0 * CFrame.fromEulerAnglesXYZ(.18,0,0) hw.C0 = hw.C0 * CFrame.new(0,1.2,0) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.3,-.2,-.2) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(.3,-.1,.1) nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(.1,0,0)
+            wait()
+        end
+         han:Destroy() mb.Anchored = true
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+        hum.WalkSpeed = 16 hum.JumpPower = 50 rut.Anchored = false
+        wait(.5)
+        mc:disconnect(die)
+        wait(.5)
+        for i = 1,10 do
+            mb.Transparency = mb.Transparency +.1
+            wait()
+        end
+        mb:Destroy()
+        wait(.1)
+        using = false
+    end
+end)
+-----------Slap----------
+function slap()
+    if mouse.Button1Down and not using then
+    using = true
+function dmg(hit1)
+    if hit1.Parent ~= nil then
+        local hum = hit1.Parent:findFirstChildOfClass("Humanoid")
+        local faic = hit1.Parent.Head:findFirstChildOfClass("Decal")
+        if hum ~= nil then
+    if hit1.Parent == char then
+       
+    else
+    hum.MaxHealth = 100
+    hum.Health = hum.Health -5
+    hum.PlatformStand = true faic.Texture = "rbxassetid://1383895045"
+    slap = Instance.new("Sound",brda) slap.Volume = 3 slap.SoundId = "rbxassetid://511340819"
+    slap:Play()
+    ogad = Instance.new("Weld",workspace) ogad.Part0 = hum.Parent.Torso ogad.Part1 = hum.Parent["Left Arm"] ogad.C0 = ogad.C0 * CFrame.fromEulerAnglesXYZ(0,0,4.7) ogad.C0 = ogad.C0 * CFrame.new(-.5,-2,0) ogad1 = Instance.new("Weld",workspace) ogad1.Part0 = hum.Parent.Torso ogad1.Part1 = hum.Parent["Right Arm"] ogad1.C0 = ogad1.C0 * CFrame.fromEulerAnglesXYZ(0,9.4,4.7) ogad1.C0 = ogad1.C0 * CFrame.new(-.5,-2,0) ogad2 = Instance.new("Weld",workspace) ogad2.Part0 = hum.Parent.Torso ogad2.Part1 = hum.Parent["Left Leg"] ogad2.C0 = ogad2.C0 * CFrame.new(-1,-1.6,0) ogad3 = Instance.new("Weld",workspace) ogad3.Part0 = hum.Parent.Torso ogad3.Part1 = hum.Parent["Right Leg"] ogad3.C0 = ogad3.C0 * CFrame.new(1,-1.6,0)
+    ow = Instance.new("Decal",hum.Parent.Head) ow.Texture = "http://www.roblox.com/asset/?id=140321302" ow.Color3 = Color3.fromRGB(255,50,50) ow.Transparency = .5
+    oof = Instance.new("Weld",workspace) oof.Part0 = hum.Parent.Head oof.Part1 = hum.Parent.Torso oof.C0 = oof.C0 * CFrame.new(0,-1.5,0) oof.C0 = oof.C0 * CFrame.fromEulerAnglesXYZ(0,.5,0)
+    wait(1)
+    slap:Destroy()
+    hum.WalkSpeed = 0 hum.JumpPower = 0
+    wait(4)
+    hum.PlatformStand = false
+    wait(3)
+    hum.WalkSpeed = 16 hum.JumpPower = 50
+        end
+    end
+    end
+    end
+    brda.Transparency = 0
+    for i = 1,5 do
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,.3)
+        wait()
+    end
+    for i = 1,5 do
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.25,0,0)
+        wait()
+    end
+    brda.CanCollide = true
+    dmgg = brda.Touched:connect(dmg)
+    for i = 1,5 do
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.4,0,0)
+        wait()
+    end
+    dmgg:disconnect(dmg)
+    for i = 1,5 do
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.1,0,-.33)
+        wait()
+    end
+    brda.Transparency = 1
+    brda.CanCollide = false
+    rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+    using = false
+    end
+end
+mouse.Button1Down:connect(slap)
+-------------Dead Sky----------
+mouse.KeyDown:connect(function(key)
+    if key == "t" and not using then
+        using = true
+        function die1(hit)
+            if hit.Parent ~= nil then
+            local hum = hit.Parent:findFirstChildOfClass("Humanoid")
+            if hum ~= nil then
+            hit:Destroy()
+            end
+        end
+        end
+        for i = 1,6 do
+            mus.Volume = mus.Volume -.5
+            wait(.2)
+        end
+        hum.WalkSpeed = 70 hum.JumpPower = 120
+        hum.DisplayDistanceType = "None" hum.HealthDisplayType = "AlwaysOff"
+        game.Lighting.TimeOfDay = 0 game.Lighting.FogColor = Color3.fromRGB(0,0,0) game.Lighting.FogEnd = 20
+        h.face.Transparency = 1    
+        eh = Instance.new("Decal",h) eh.Texture = "http://www.roblox.com/asset/?id=1471407701"
+        scm = Instance.new("Sound",workspace)  scm.Volume = 1 scm.SoundId = "rbxassetid://1569907462" scm:Play()
+        hewill = Instance.new("Sound",workspace) hewill.Pitch = .9 hewill.Volume = 10 hewill.SoundId = "rbxassetid://689176850" hewill:Play()
+        for i = 1,70 do
+            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(0,.0125,0)
+            wait()
+            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(0,-.00625,0)
+            wait()
+        end
+        wait(4.4)
+        lau = Instance.new("Sound",t) lau.SoundId = "rbxassetid://138085838" lau.Volume = 5 lau:Play()
+        hum.WalkSpeed = 0 hum.JumpPower = 0
+        blid = Instance.new("Part",workspace) blid.Anchored = true blid.CanCollide = false blid.BrickColor = BrickColor.new("Crimson") blid.Material = "Neon" blid.Size = Vector3.new(1,.05,1) blid.CFrame = t.CFrame * CFrame.new(0,-2.85,0) bm = Instance.new("SpecialMesh",blid) bm.MeshType = "Sphere"
+        for i = 1,15 do
+            blid.Size = blid.Size + Vector3.new(1,0,1)
+            rut.Anchored = true
+            wait()
+        end
+        hewill:Destroy()
+        wot = Instance.new("Part",workspace) wot.CanCollide = false wot.Transparency = 1 wot.Size = Vector3.new(1000, 1000, 60) wot.Anchored = true wot.CFrame = t.CFrame * CFrame.new(0,100,0) wot.CFrame = wot.CFrame * CFrame.fromEulerAnglesXYZ(4.7,0,0) wot.BrickColor = BrickColor.new("Crimson") wot.Material = "Glass" wot.Transparency = 1 li = Instance.new("SurfaceLight",wot) li.Angle = 180 li.Brightness = 100 li.Color = Color3.fromRGB(255,0,0) li.Range = 100 li.Face = "Front" wot.Name = "onoweded" hum.WalkSpeed = 0 hum.JumpPower = 0
+        dy3 = wot.Touched:connect(die1)
+        for i = 1,5 do
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,-2.5)
+            wot.Transparency = wot.Transparency -.14
+            wait()
+        end
+        for i = 1,15 do
+            blid.Size = blid.Size - Vector3.new(1,0,1)
+            wait()
+        end
+        blid.Transparency = 1
+        for i = 1,14 do
+            wot.CFrame = wot.CFrame * CFrame.new(0,0,-2.5)
+            wait(.1)
+        end
+        lau:Destroy()
+        for i = 1,26 do
+            wot.CFrame = wot.CFrame * CFrame.new(0,0,-2.5)
+            wait(.1)
+        end
+        wait(1)
+        blid.Transparency = 0
+        for i = 1,15 do
+            blid.Size = blid.Size + Vector3.new(1,0,1)
+            wait()
+        end
+        scm:Destroy()
+        h.face.Transparency = 0 eh:Destroy()
+        for i = 1,6 do
+            mus.Volume = mus.Volume +.5
+            wait()
+        end
+        for i = 1,7 do
+            wot.Transparency = wot.Transparency +.1
+            wait()
+        end
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0) rutj.C0 = rutj.C0 * CFrame.new(0,0,-10)
+        hum.DisplayDistanceType = "Viewer" hum.HealthDisplayType = "DisplayWhenDamaged"
+        for i = 1,5 do
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,2)
+            wait()
+        end
+        rut.Anchored = false wot:Destroy() hum.WalkSpeed = 16 hum.JumpPower = 50 game.Lighting.TimeOfDay = 14 game.Lighting.FogColor = Color3.fromRGB(191,191,191) game.Lighting.FogEnd = 100000
+        for i = 1,10 do
+            blid.Transparency = blid.Transparency +.1
+            wait(.05)
+        end
+        blid:Destroy()
+        wait(.1)
+        using = false
+    end
+end)
+----------------Bit Toast-------------
+mouse.KeyDown:connect(function(key)
+    if key == "r" and not using and not eating then
+        using = true
+        eating = true
+        for i = 1,10 do
+            brda.Transparency = brda.Transparency -.1
+            wait()
+        end
+        hum.WalkSpeed = 0 hum.JumpPower = 0
+        for i  = 1,10 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.1,.07,.15) brdaw.C0 = brdaw.C0 * CFrame.fromEulerAnglesXYZ(.2,.15,.2)
+            wait()
+        end
+        wait(.5)
+        crunch = Instance.new("Sound",brda) crunch.Volume = 5 crunch.SoundId = "rbxassetid://181027147" crunch:Play()
+        piece = Instance.new("Part",workspace) piece.BrickColor = BrickColor.new("Wheat") piece.Size = Vector3.new(.1,.1,.1) piece.TopSurface = "Smooth" piece.BottomSurface = "Smooth" piece.CFrame = h.CFrame * CFrame.new(.1,0,-.4)
+        piece1 = Instance.new("Part",workspace) piece1.BrickColor = BrickColor.new("Deep orange") piece1.Size = Vector3.new(.1,.1,.1) piece1.TopSurface = "Smooth" piece1.BottomSurface = "Smooth" piece1.CFrame = h.CFrame * CFrame.new(0,0,-.5)
+        piece2 = Instance.new("Part",workspace) piece2.BrickColor = BrickColor.new("Wheat") piece2.Size = Vector3.new(.1,.1,.1) piece2.TopSurface = "Smooth" piece2.BottomSurface = "Smooth" piece2.CFrame = h.CFrame * CFrame.new(0,.05,-.5)
+        piece3 = Instance.new("Part",workspace) piece3.BrickColor = BrickColor.new("Wheat") piece3.Size = Vector3.new(.1,.1,.1) piece3.TopSurface = "Smooth" piece3.BottomSurface = "Smooth" piece3.CFrame = h.CFrame * CFrame.new(-.1,.1,-.6)
+        piece4 = Instance.new("Part",workspace) piece4.BrickColor = BrickColor.new("Wheat") piece4.Size = Vector3.new(.1,.1,.1) piece4.TopSurface = "Smooth" piece4.BottomSurface = "Smooth" piece4.CFrame = h.CFrame * CFrame.new(-.1,.1,-.6)
+        for i = 1,2 do
+            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(.1,0,0)
+            wait()
+        end
+        happy = Instance.new("Decal",h) happy.Texture = "http://www.roblox.com/asset/?id=258591579" h.face.Transparency = 1
+        wait(.07)
+        for i  = 1,10 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.1,-.07,-.15) brdaw.C0 = brdaw.C0 * CFrame.fromEulerAnglesXYZ(-.2,-.15,-.2)
+            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(-.02,0,0)
+            wait()
+        end
+        for i = 1,10 do
+            brda.Transparency = brda.Transparency +.1
+            wait()
+        end
+        crunch:Destroy() hum.WalkSpeed = 40 hum.JumpPower = 80
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1) brdaw.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,3) brdaw.C0 = brdaw.C0 * CFrame.new(0,1.3,0)
+        wait(.1)
+        using = false
+        for i = 1,10 do
+            hum.WalkSpeed = 40 hum.JumpPower = 80
+            wait(.5)
+        end
+        for i = 1,10 do
+            piece.Transparency = piece.Transparency +.1
+            piece1.Transparency = piece1.Transparency +.1
+            piece2.Transparency = piece2.Transparency +.1
+            piece3.Transparency = piece3.Transparency +.1
+            piece4.Transparency = piece4.Transparency +.1
+            wait()
+        end
+        piece:Destroy() piece1:Destroy() piece2:Destroy() piece3:Destroy() piece4:Destroy()
+        for i = 1,30 do
+            hum.WalkSpeed = 40 hum.JumpPower = 80
+            wait(.5)
+        end
+        happy:Destroy() h.face.Transparency = 0
+        hum.WalkSpeed = 16 hum.JumpPower = 50
+        eating = false
+        end
+end)
+-------------Sit--------------
+mouse.KeyDown:connect(function(key)
+    if key == "z" and not using then
+        hum.WalkSpeed = 0 hum.JumpPower = 0
+        rutj.C0 = rutj.C0 * CFrame.new(0,0,-1.9)
+        rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(0,-.2,.8) rh.C0 = rh.C0 * CFrame.new(1,.4,0)
+        lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(0,.1,-1.5) lh.C0 = lh.C0 * CFrame.new(-.3,0,0)
+        rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,1,1)
+        ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,-.5,-.7)
+    end
+end)
+mouse.KeyUp:connect(function(key)
+    if key == "z" and not using then
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+        hum.WalkSpeed = 16 hum.JumpPower = 50
+    end
+end)
+-------------Punch-------------
+mouse.KeyDown:connect(function(key)
+    if key == "f" and not using then
+        using = true
+            function punch(hit)
+                if hit.Parent ~= nil then
+                    local huma = hit.Parent:findFirstChildOfClass("Humanoid")
+                    if hum ~= nil then
+                        ow = Instance.new("Sound",hit.Parent.Head) ow.Volume = 3 ow.SoundId = "rbxassetid://743886825" ow:Play()
+                        huma.MaxHealth = 100 huma.PlatformStand = true
+                        huma:TakeDamage(math.random(1,5))
+                        huma.Health = huma.Health -0
+                        blud = Instance.new("Part",hit.Parent.Head) blud.Material = "Glass" blud.Shape = "Ball" blud.Size = Vector3.new(.25,.25,.25) blud.BrickColor = BrickColor.new("Crimson") blud.CFrame = hit.Parent.Head.CFrame bludm = Instance.new("SpecialMesh",blud) bludm.MeshType = "Brick"
+                        wait(3)
+                        for i,v in pairs(hit.Parent.Head:GetChildren()) do
+                            if v:IsA("Part") then
+                                v.Transparency = v.Transparency +.1
+                                wait(.1)
+                            end
+                        end
+                        for i,v in pairs(hit.Parent.Head:GetChildren()) do
+                            if v:IsA("Part") then
+                                v:Destroy()
+                                wait()
+                            end
+                        end
+                        ow:Destroy() huma.PlatformStand = false
+                    end
+                end
+            end
+            hb = Instance.new("Part",ra) hb.Size = Vector3.new(1,1,1) hbw = Instance.new("Weld",hb) hb.Transparency = 1 hbw.Part0 = ra hbw.Part1 = hb hbw.C0 = hbw.C0 * CFrame.new(0,-.5,0)
+            for i = 1,5 do
+            rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.1)
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,.3)
+            wait()
+            end
+            hb.Touched:connect(punch)
+            wait(.2)
+            for i = 1,5 do
+                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,.3)
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.16,0,0)
+                wait()
+            end
+            for i,v in pairs(ra:GetChildren()) do
+            if v:IsA("Part") then
+                v:Destroy()
+            end
+        end
+            for i = 1,10 do
+                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.1)
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.154)
+                wait()
+            end
+            rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1) rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,3.145,0)
+        wait(.1)
+        using = false
+    end
+end)
+-------Teleport--------
+mouse.KeyDown:connect(function(key)
+    if key == "x" then
+        t.CFrame = mouse.Hit * CFrame.new(0,2.5,0)
+    end
+end)
+---------FINISH HIM---------
+mouse.KeyDown:connect(function(key)
+    if key == "g" and not using then
+        using = true
+        function awa(hit)
+            if hit.Parent ~= nil then
+                local humn = hit.Parent:findFirstChildOfClass("Humanoid")
+                if humn ~= nil then
+                    if humn.PlatformStand == true then
+                        ow1 = Instance.new("Sound",hit.Parent.Head) ow1.Volume = 3 ow1.SoundId = "rbxassetid://743886825" ow1:Play() humn.Health = 0
+                    for i = 1,10 do
+                        blud1 = Instance.new("Part",hit.Parent.Head) blud1.Material = "Glass" blud1.CFrame = hit.Parent.Head.CFrame blud1.Size = Vector3.new(.25,.25,.25) blud1.BrickColor = BrickColor.new("Crimson") blud1.Shape = "Ball" blud1m = Instance.new("SpecialMesh",blud1) blud1m.MeshType = "Brick"
+                    end
+                    for i,v in pairs(hit.Parent.Head:GetChildren()) do
+                            if v:IsA("Part") then
+                                v.Transparency = v.Transparency +.1
+                                wait(.1)
+                            end
+                        end
+                        for i,v in pairs(hit.Parent.Head:GetChildren()) do
+                            if v:IsA("Part") then
+                                v:Destroy()
+                                wait()
+                            end
+                        end
+                    for i = 1,50 do
+                        humn.Health = 0
+                        wait()
+                    end
+                    ow1:Destroy()
+                    end
+                end
+            end
+        end
+        for i = 1,5 do
+        rh.C0 = rh.C0 * CFrame.new(.17,.25,0) rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(-.03,0,0) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.1,0.04,.17) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(-0.1,-.04,-.17) lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(0,0,.05)
+        wait()
+        end
+        hitbox = Instance.new("Part",rl) hitbox.Size = Vector3.new(1,1,1) hitbox.Transparency = 1 hw = Instance.new("Weld",hitbox) hw.Part0 = rl hw.Part1 = hitbox hw.C0 = hw.C0 * CFrame.new(0,-.5,0)
+        wait(.3)
+        hc = hitbox.Touched:connect(awa)
+        for i = 1,5 do
+            rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(0,0,.03)
+            rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(.1,0,0)
+            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(.1,0,0)
+            rh.C0 = rh.C0 * CFrame.new(0,-.25,0) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.34) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,0,.34)
+            wait()
+        end
+        for i,v in pairs(rl:GetChildren()) do
+            if v:IsA("Part") then
+                v:Destroy()
+            end
+        end
+        for i = 1,5 do
+            rh.C0 = rh.C0 * CFrame.new(-.17,0,0) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.1,0,.17) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(.1,0,-.17) rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(-.08,0,0) nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(-.1,0,0)
+            wait()
+        end
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+        wait(.1)
+        using = false
+    end
+end)
+----------Crouch------------
+mouse.KeyDown:connect(function(key)
+    if key == "c" and not using then
+        hum.WalkSpeed = 7 hum.JumpPower = 20
+        rutj.C0 = rutj.C0 * CFrame.new(0,0,-1) rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(.5,0,0)
+        nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(-.4,0,0)
+        rh.C0 = rh.C0 * CFrame.new(.6,1,0) rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(0,0,.3)
+        lh.C0 = lh.C0 * CFrame.new(-.6,1,0) lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.33)
+        for i,v in pairs(char:GetChildren()) do
+            if v:IsA("Accessory") then
+                v.Handle.Transparency = .8
+            end
+        end
+        ra.Transparency = .8 la.Transparency = .8 rl.Transparency = .8 ll.Transparency = .8 t.Transparency = .8 h.Transparency = .8 h.face.Transparency = .8
+    end
+end)
+mouse.KeyUp:connect(function(key)
+    if key == "c" and not using then
+        for i,v in pairs(char:GetChildren()) do
+            if v:IsA("Accessory") then
+                v.Handle.Transparency = 0
+            end
+        end
+        ra.Transparency = 0 la.Transparency = 0 rl.Transparency = 0 ll.Transparency = 0 t.Transparency = 0 h.Transparency = 0 h.face.Transparency = 0
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+        hum.WalkSpeed = 16 hum.JumpPower = 50
+    end
+end)
+------------CrUnCh------------
+mouse.KeyDown:connect(function(key)
+    if key == "v" and not using then
+        using = true
+        local bric = Instance.new("Part",char) bric.Name = "g0 d13 n00b" bric.Size = Vector3.new(4,6,4) bric.CanCollide = false bric.Transparency = 1 local bricw = Instance.new("Weld",bric) bricw.Part0 = t bricw.Part1 = bric
+        function    smash(hit)
+                if hit.Parent ~= nil then
+                    local bitc = hit.Parent:FindFirstChildOfClass("Humanoid")
+                    if bitc ~= nil then
+                        if hit.Parent == char then
+                           
+                        else
+                            local n00b = hit.Parent
+                            bric:Destroy()
+                            for i = 1,5 do
+                                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.1)
+                                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.1,-.25,.35)
+                                wait()
+                            end
+                            wait(.4)
+                            rut.Anchored = true
+                            local prt = Instance.new("Part",ra) prt.Size = Vector3.new(1,1,1) prt.Transparency = 1 local pw = Instance.new("Weld",prt) pw.Part0 = ra pw.Part1 = prt pw.C0 = pw.C0 * CFrame.new(0,.5,0)
+                            local hw = Instance.new("Weld",prt) hw.Part0 = prt hw.Part1 = n00b.Head hw.C0 = hw.C0 * CFrame.new(0,-1.5,-2) * CFrame.fromEulerAnglesXYZ(1.55,0,3.1)
+                            for i = 1,2 do
+                                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,1)
+                                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,.5,.2)
+                                nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(0,.2,-.45)
+                                wait()
+                            end
+                            wait(1.5)
+                            for i = 1,10 do
+                                    local bred = Instance.new("Part",n00b.Head) bred.Size = Vector3.new(0.624, 0.632, 0.08)
+                                    local brd = Instance.new("SpecialMesh",bred) brd.MeshType = "FileMesh" brd.MeshId = "rbxassetid://1614924885" brd.TextureId = "rbxassetid://1614940093" brd.Scale = Vector3.new(0.002,0.002,0.002)
+                                    bred.CFrame = n00b.Head.CFrame
+                            end
+                            local pe = Instance.new("ParticleEmitter",n00b.Head) pe.Color = ColorSequence.new(Color3.fromRGB(255,200,200)) pe.Acceleration = Vector3.new(0,-5,0) pe.Texture = "http://www.roblox.com/asset/?id=1450282643" pe.SpreadAngle = Vector2.new(180,180) pe.Rate = 100
+                            local pe1 = Instance.new("ParticleEmitter",n00b.Head) pe1.Color = ColorSequence.new(Color3.fromRGB(255,200,200)) pe1.Acceleration = Vector3.new(0,-5,0) pe1.Texture = "http://www.roblox.com/asset/?id=1450282643" pe1.SpreadAngle = Vector2.new(180,180) pe1.Rate = 100
+                            local cru = Instance.new("Sound",t) cru.SoundId = "rbxassetid://181027147" cru.Volume = 10 cru:Play()
+                            local chunch = Instance.new("Sound",t) chunch.SoundId = "rbxassetid://618667795" chunch.Volume = 2 chunch:Play()
+                            rut.Anchored = false
+                            prt:Destroy()
+                            n00b:BreakJoints()
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Part") then
+                                    v.BrickColor = BrickColor.new("Wheat")
+                                    v.Transparency = .2 v.Material = "Glass"
+                                    v.Anchored = false
+                                    local dec = v:FindFirstChildOfClass("Decal")
+                                    if dec ~= nil then
+                                        dec:Destroy()
+                                    end
+                                    local mec = v:FindFirstChildOfClass("SpecialMesh")
+                                    if mec ~= nil then
+                                        mec:Destroy()
+                                    end
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Accessory") or ("Hat") then
+                                    local pt = v:FindFirstChildOfClass("Part")
+                                    if pt ~= nil then
+                                        pt.Anchored = false
+                                        pt.Transparency = .3 pt.BrickColor = BrickColor.new("Wheat")
+                                        pt.Material = "Glass" pt.CanCollide = true
+                                        local smh = pt:FindFirstChildOfClass("SpecialMesh")
+                                        if smh ~= nil then
+                                            smh.TextureId = ""
+                                        end
+                                    end
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("MeshPart") then
+                                v.Anchored = false
+                                    v.BrickColor = BrickColor.new("Wheat")
+                                    v.Transparency = .2 v.Material = "Glass"
+                                    local dec = v:FindFirstChildOfClass("Decal")
+                                    if dec ~= nil then
+                                        dec:Destroy()
+                                    end
+                                    end
+                                end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Script") then
+                                    v:Destroy()
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Humanoid") then
+                                    v:Destroy()
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("CharacterMesh") then
+                                    v:Destroy()
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Shirt") then
+                                    v:Destroy()
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Pants") then
+                                    v:Destroy()
+                                end
+                            end
+                            for i,v in pairs(n00b:GetChildren()) do
+                                if v:IsA("Part") and v:IsA("SpecialMesh") then
+                                    v.Transparency = .5 v.CanCollide = true
+                                    v.Name = "nub" v.BrickColor = BrickColor.new("Wheat")
+                                    v.Mesh.TextureId = ""
+                                end
+                            end
+                            wait(.3)
+                            pe.Enabled = false
+                            pe1.Enabled = false
+                            rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+                            ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+                            rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+                            lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+                            nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+                            rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+                        wait(2)
+                        chunch:Destroy() cru:Destroy()
+                            n00b:Destroy()
+                    end
+                end
+                end
+                end
+        bric.Touched:connect(smash)
+        wait(3)
+        bric:Destroy()
+        using = false
+        end
+end)
+--------Cut the throat---------
+mouse.KeyDown:connect(function(key)
+    if key == "h" and not using then
+            local hum1 = mouse.Target.Parent:findFirstChildOfClass("Humanoid")
+            if hum1 ~= nil then
+                char.Animate.Disabled = true
+                for i,v in pairs(hum1.Parent:GetChildren()) do
+                    if v:IsA("LocalScript") then
+                        v:Destroy()
+                    end
+                end
+                for i,v in pairs(hum1.Parent:GetChildren()) do
+                    if v:IsA("Script") then
+                        v:Destroy()
+                    end
+                end
+                disshit = hum1.Parent
+                h1 = hum1.Parent.Head
+                t1 = hum1.Parent.Torso
+                ra1 = hum1.Parent["Right Arm"]
+                la1 = hum1.Parent["Left Arm"]
+                rl1 = hum1.Parent["Right Leg"]
+                ll1 = hum1.Parent["Left Leg"]
+                hum1.WalkSpeed = 0 hum1.JumpPower = 0 hum1.Parent.Head.Anchored = true hum.WalkSpeed = 0 hum.JumpPower = 0
+                t.CFrame = hum1.Parent.Head.CFrame * CFrame.new(0,-1.5,-2.5) t.CFrame = t.CFrame * CFrame.fromEulerAnglesXYZ(0,3.1,0)
+                knife = Instance.new("Part",ra) knife.Size = Vector3.new(0.2, 3, 0.7) km = Instance.new("SpecialMesh",knife) km.MeshType = "FileMesh" km.MeshId = "http://www.roblox.com/asset/?id=121944778" km.TextureId = "http://www.roblox.com/asset/?id=161971611" kw = Instance.new("Weld",knife) kw.Part0 = knife kw.Part1 = ra kw.C0 = kw.C0 * CFrame.new(0,-.6,1) kw.C0 = kw.C0 * CFrame.fromEulerAnglesXYZ(1.5,3,0)
+            rut.Anchored = true
+            for i = 1,5 do
+                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.1) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.3,0,0)
+                wait()
+            end
+            bb = Instance.new("BillboardGui",char)
+            bb.AlwaysOnTop = false
+            bb.Size = UDim2.new(5,35,2,15)
+            bb.StudsOffset = Vector3.new(4,0,0)
+            bb.MaxDistance = 75
+            bb.Adornee = h
+            bb.Name = "Name"
+            label = Instance.new("TextLabel",bb)
+            label.BackgroundTransparency = 1
+            label.TextScaled = true
+            label.BorderSizePixel = 0
+            label.Text = "Be Gone... " ..disshit.Name
+            label.Font = "Cartoon"
+            label.TextSize = 20
+            label.TextStrokeTransparency = 0
+            label.TextColor3 = Color3.new(1,1,1)
+            label.TextStrokeColor3 = Color3.fromRGB(255,150,0)
+            label.Size = UDim2.new(1,0,0.5,0)
+            label.Parent = bb
+            for i = 1,10 do
+                bb.StudsOffset = bb.StudsOffset +Vector3.new(0,.2,0)
+                label.TextTransparency = label.TextTransparency +.1
+                label.TextStrokeTransparency = label.TextStrokeTransparency +.1
+                wait(.07)
+            end
+            for i,v in pairs(char:GetChildren()) do
+                if v:IsA("BillboardGui") then
+                    v:Destroy()
+                end
+            end
+            for i = 1,3 do
+                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,.3) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,.6)
+                wait()
+            end
+            hum1.Health = 0.1 hum1.MaxHealth = 100
+            stab = Instance.new("Sound",h1) stab.TimePosition = .3 stab.SoundId = "rbxassetid://1386772138" stab.Volume = 3 stab:Play()
+            hum1.PlatformStand = true
+            hum1.Parent.Head.Anchored = false
+            for i,v in pairs(t1:GetChildren()) do
+                if v:IsA("Motor6D") then
+                    v:Destroy()
+                end
+            end
+            for i,v in pairs(h1:GetChildren()) do
+                if v:IsA("Decal") then
+                    v:Destroy()
+                end
+            end
+            aaaaa = Instance.new("Sound",h1) aaaaa.SoundId = "rbxassetid://393884633" aaaaa.Volume = 3 aaaaa:Play()
+            disshit:BreakJoints()
+            ooww = Instance.new("Decal",h1) ooww.Texture = "http://www.roblox.com/asset/?id=1253783230"
+            at2 = Instance.new("Attachment",t1) at2.Position = Vector3.new(1,.8,0) at2.Position = Vector3.new(1,.8,0)
+            at = Instance.new("Attachment",ra1) at.Name = "oof" at.Position = Vector3.new(-.5,.8,0)
+            balls = Instance.new("BallSocketConstraint",ra1) balls.Attachment0 = at2 balls.Attachment1 = at
+            at21 = Instance.new("Attachment",t1) at21.Position = Vector3.new(-1,.8,0) at21.Position = Vector3.new(-1,.8,0) at21.Orientation = Vector3.new(0,180,0)
+            at1 = Instance.new("Attachment",la1) at.Name = "oof" at1.Position = Vector3.new(.5,.8,0)
+            balls1 = Instance.new("BallSocketConstraint",la1) balls1.Attachment0 = at21 balls1.Attachment1 = at1
+            nek = Instance.new("Attachment",h1) nek2 = Instance.new("Attachment",t1) nek2.Position = Vector3.new(0,1,0) nek.Position = Vector3.new(0,-.5,0) nball = Instance.new("BallSocketConstraint",h1) nball.Attachment0 = nek nball.Attachment1 = nek2
+            owihatedis = Instance.new("Attachment",t1) owihatedis.Position = Vector3.new(.6,-1,0) oihd = Instance.new("Attachment",rl1) oihd.Position = Vector3.new(.1,1,0) oww = Instance.new("BallSocketConstraint",rl1) oww.Attachment0 = owihatedis oww.Attachment1 = oihd
+            owihatedis2 = Instance.new("Attachment",t1) owihatedis2.Position = Vector3.new(-.6,-1,0) oihd2 = Instance.new("Attachment",ll1) oihd2.Position = Vector3.new(-.1,1,0) oww2 = Instance.new("BallSocketConstraint",ll1) oww2.Attachment0 = owihatedis2 oww2.Attachment1 = oihd2
+            box = Instance.new("Part",ra1) box.Size = Vector3.new(1,1,1) box.Transparency = 1
+        box1 = Instance.new("Part",la1) box1.Size = Vector3.new(1,1,1) box1.Transparency = 1
+        box2 = Instance.new("Part",rl1) box2.Size = Vector3.new(1,1,1) box2.Transparency = 1
+        box3 = Instance.new("Part",ll1) box3.Size = Vector3.new(1,1,1) box3.Transparency = 1
+        box4 = Instance.new("Part",t1) box4.Size = t.Size - Vector3.new(0,.2,0) box4.Transparency = 1
+        bw = Instance.new("Weld",box) bw.Part0 = box bw.Part1 = ra1 bw.C0 = bw.C0 * CFrame.new(0,.5,0)
+        bw1 = Instance.new("Weld",box1) bw1.Part0 = box1 bw1.Part1 = la1 bw1.C0 = bw1.C0 * CFrame.new(0,.5,0)
+        bw2 = Instance.new("Weld",box2) bw2.Part0 = box2 bw2.Part1 = rl1 bw2.C0 = bw2.C0 * CFrame.new(0,.5,0)
+        bw3 = Instance.new("Weld",box3) bw3.Part0 = box3 bw3.Part1 = ll1 bw3.C0 = bw3.C0 * CFrame.new(0,.5,0)
+        bw4 = Instance.new("Weld",box4) bw4.Part0 = box4 bw4.Part1 = t1  bw4.C0 = bw4.C0 * CFrame.new(0,.2,0)
+            for i = 1,2 do
+                rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,.3) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,.4)
+                wait()
+            end
+            end
+            char.Animate.Disabled = false
+            rut.Anchored = false
+        hum.WalkSpeed = 16 hum.JumpPower = 50
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1) rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,3.145,0) knife:Destroy()
+        for i = 1,10 do
+            blood = Instance.new("Part",h1) blood.Size = Vector3.new(3,3,.01) blood.BrickColor = BrickColor.new("Crimson") blood.TopSurface = "Smooth" blood.BottomSurface = "Smooth" blood.Material = "Glass" blood.CFrame = h1.CFrame * CFrame.new(0,-.5,-.6) bloodm = Instance.new("SpecialMesh",blood) bloodm.MeshType = "Sphere"
+            wait(.2)
+        end
+        wait(1)
+            for i = 1,10 do
+                h1.Transparency = h1.Transparency +.1
+                t1.Transparency =t1.Transparency +.1
+                ra1.Transparency = ra1.Transparency +.1
+                la1.Transparency =la1.Transparency +.1
+                rl1.Transparency = rl1.Transparency +.1
+                ll1.Transparency = ll1.Transparency +.1
+                wait(.05)
+            end
+            disshit:Destroy()
+            bb = Instance.new("BillboardGui",char)
+            bb.AlwaysOnTop = false
+            bb.Size = UDim2.new(5,35,2,15)
+            bb.StudsOffset = Vector3.new(4,0,0)
+            bb.MaxDistance = 75
+            bb.Adornee = h
+            bb.Name = "Name"
+            label = Instance.new("TextLabel",bb)
+            label.BackgroundTransparency = 1
+            label.TextScaled = true
+            label.BorderSizePixel = 0
+            label.Text = disshit.Name.. " Is Gone..."
+            label.Font = "Cartoon"
+            label.TextSize = 20
+            label.TextStrokeTransparency = 0
+            label.TextColor3 = Color3.new(1,1,1)
+            label.TextStrokeColor3 = Color3.fromRGB(255,150,0)
+            label.Size = UDim2.new(1,0,0.5,0)
+            label.Parent = bb
+            for i = 1,10 do
+                bb.StudsOffset = bb.StudsOffset +Vector3.new(0,.2,0)
+                label.TextTransparency = label.TextTransparency +.1
+                label.TextStrokeTransparency = label.TextStrokeTransparency +.1
+                wait(.07)
+            end
+            for i,v in pairs(char:GetChildren()) do
+                if v:IsA("BillboardGui") then
+                    v:Destroy()
+                end
+            end
+        end
+end)
+-------Throw Toast(Can eat)--------
+mouse.KeyDown:connect(function(key)
+    if key == "y" and not using then
+        function eat(toch)
+        if toch.Parent ~= nil then
+        local humt = toch.Parent:findFirstChildOfClass("Humanoid")
+        if humt ~= nil then
+        local hed = humt.Parent.Head
+        toast:Destroy()
+        humt.Health = humt.Health +20 humt.WalkSpeed = humt.WalkSpeed +5 humt.JumpPower = humt.JumpPower +5
+        yum = Instance.new("Sound",hed) yum.Volume = 8 yum.SoundId = "rbxassetid://181027147" yum:Play()
+        wait(1)
+        yum:Destroy()
+        wait(10)
+        humt.WalkSpeed = humt.WalkSpeed -5 humt.JumpPower = humt.JumpPower -5
+        end
+        end
+        end
+        toast = Instance.new("Part",workspace) toast.Name = "EATMEBITC" toast.Size = Vector3.new(1.248, 1.264, 0.16) tm = Instance.new("SpecialMesh",toast) tm.Scale = Vector3.new(0.003, 0.003, 0.003) tm.MeshType = "FileMesh" tm.MeshId = "rbxassetid://1614924885" tm.TextureId = "rbxassetid://1614940093" tw = Instance.new("Weld",brda) tw.Name = "wuild" tw.Part0 = toast tw.Part1 = brda
+        for i = 1,5 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.2,-.2,.2)
+            wait()
+        end
+        wait(.3)
+        for i = 1,2 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.2,0,.1)
+            wait()
+        end
+        for i,v in pairs(brda:GetChildren()) do
+            if v:IsA("Weld") then
+            v:Destroy()
+        end
+        end
+        toast.Touched:connect(eat)
+        for i = 1,5 do
+            toast.CFrame = toast.CFrame * CFrame.new(0,1,1)
+            wait()
+        end
+        for i = 1,3 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.2,0,.1)
+            wait()
+        end
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+    end
+end)
+------Summon Explosion------
+ALLAHU_AKBAR = false
+mouse.KeyDown:connect(function(key)
+    if key == "b" and not using and not ALLAHU_AKBAR then
+        using = true
+        ALLAHU_AKBAR = true
+        local bum = Instance.new("Part",workspace) bum.CFrame = mouse.Hit bum.TopSurface = "Smooth" bum.BottomSurface = "Smooth" bum.Material = "Neon" bum.BrickColor = BrickColor.new("Deep orange") bum.Transparency = 1  bum.Shape = "Ball" bum.Size = Vector3.new(50,50,50) bum.CanCollide = false bum.Anchored = true
+                    function aa(hit)
+                        if hit.Parent ~= nil then
+                            local humta = hit.Parent:findFirstChildOfClass("Humanoid")
+                            if humta ~= nil then
+                                if hit.Parent == char then
+                                   
+                                else
+                                    local datbitc = hit.Parent humta.DisplayDistanceType = "None"
+                                    hit.Transparency = 1 hit.Anchored = true
+                                    for i,v in pairs(datbitc:GetChildren()) do
+                                        if v:IsA("Accessory") then
+                                            v:Destroy()
+                                        end
+                                    end
+                                    datbitc.Head.CFrame = bum.CFrame
+                                    humta.Parent.Head.Anchored = true
+                                    wait(1.4)
+                                    datbitc:Destroy()
+                                end
+                            end
+                        end
+                    end
+                    bum.Touched:connect(aa)
+                    local tweens = game:GetService("TweenService") 
+                    local tweeni = TweenInfo.new(
+                        1,
+                        Enum.EasingStyle.Bounce,
+                        Enum.EasingDirection.Out,
+                        0,                     
+                        true,
+                        0
+                    )                  
+                    local size = {Size = Vector3.new(5,5,5), Transparency = 0,Color = Color3.fromRGB(255,0,0)}     
+                    local tsize = tweens:Create(bum,tweeni,size)                               
+                    tsize:Play()   
+                    wait(1.4)
+                    local bs = Instance.new("Sound",bum) bs.SoundId = "rbxassetid://144699494" bs.Volume = 10 bs:Play()
+                    wait(1.7)
+                    bum:Destroy()
+                    using = false
+                    wait(5)
+                    local uf = Instance.new("Sound",t) uf.SoundId = "rbxassetid://1474367957" uf.Volume = 2 uf:Play()
+                    ALLAHU_AKBAR = false
+                    wait(1)
+                    uf:Destroy()
+    end
+end)
+------Kaboom------
+kaboom1 = false
+mouse.KeyDown:connect(function(key)
+    if key == "j" and not using and not kaboom1 then
+        function ah(hit)
+            if hit.Parent ~= nil then
+                local humana = hit.Parent:findFirstChildOfClass("Humanoid")
+                if humana ~= nil then
+                    if hit.Parent == char then
+                       
+                    else
+                        local bitc = hit.Parent
+                        bitc:Destroy()
+                    end
+                end
+            end
+        end
+        using = true
+        rut.Anchored = true kaboom1 = true
+        for i = 1,10 do
+            rut.CFrame = rut.CFrame * CFrame.new(0,3,0)
+            mus.Volume = mus.Volume -.3
+            cm.Volume = cm.Volume +.1
+            wait()
+        end
+        local poom = Instance.new("Sound",t) poom.EmitterSize = 1000 poom.Volume = 10 poom.Pitch = .6 poom.SoundId = "rbxassetid://704085554"
+        local bum = Instance.new("Part",t) bum.Transparency = 1 bum.CanCollide = false bum.Anchored = true bum.CFrame = t.CFrame bum.Size = Vector3.new(200,200,200) bum.BrickColor = BrickColor.new("Toothpaste") bum.Shape = "Ball" bum.Material = "Neon"
+        local bum1 = Instance.new("Part",t) bum1.Transparency = 1 bum1.CanCollide = false bum1.Anchored = true bum1.CFrame = t.CFrame bum1.Size = Vector3.new(200,200,200) bum1.BrickColor = BrickColor.new("Toothpaste") bum1.Shape = "Ball" bum1.Material = "Neon"
+        local bum2 = Instance.new("Part",t) bum2.Transparency = 1 bum2.CanCollide = false bum2.Anchored = true bum2.CFrame = t.CFrame bum2.Size = Vector3.new(200,200,200) bum2.BrickColor = BrickColor.new("Toothpaste") bum2.Shape = "Ball" bum2.Material = "Neon"
+        local bum3= Instance.new("Part",t) bum3.Transparency = 1 bum3.CanCollide = false bum3.Anchored = true bum3.CFrame = t.CFrame bum3.Size = Vector3.new(200,200,200) bum3.BrickColor = BrickColor.new("Toothpaste") bum3.Shape = "Ball" bum3.Material = "Neon"
+        local tweeni = TweenInfo.new(
+            .6,
+            Enum.EasingStyle.Quint,
+            Enum.EasingDirection.In,
+            0,
+            false,
+            0
+        )
+        local size = {Size = Vector3.new(7,7,7), Color = Color3.fromRGB(255,100,0), Transparency = .75}
+        local tsize = tweens:Create(bum,tweeni,size)
+        local size1 = {Size = Vector3.new(7,7,7), Color = Color3.fromRGB(255,100,0), Transparency = .5}
+        local tsize1 = tweens:Create(bum1,tweeni,size1)
+        local size2 = {Size = Vector3.new(7,7,7), Color = Color3.fromRGB(255,100,0), Transparency = .25}
+        local tsize2 = tweens:Create(bum2,tweeni,size2)
+        local size3 = {Size = Vector3.new(7,7,7), Color = Color3.fromRGB(255,100,0), Transparency = 0}
+        local tsize3 = tweens:Create(bum3,tweeni,size2)
+        tsize:Play()
+        poom:Play()
+        wait(.6)
+        tsize1:Play()
+        poom:Play()
+        wait(.6)
+        tsize2:Play()
+        poom:Play()
+        wait(.6)
+        tsize3:Play()
+        poom:Play()
+        local kaboom = Instance.new("Sound",t) kaboom.Volume = 3 kaboom.SoundId = "rbxassetid://138084923" kaboom:Play()
+        wait(1)
+        bum.Transparency = 1 bum1.Transparency = 1 bum2.Transparency = 1
+        local alahuakbar = {Size = Vector3.new(500,500,500), Transparency = 1, Color = Color3.fromRGB(255,50,0)}
+        local tak = tweens:Create(bum3,tweeni,alahuakbar)
+        tak:Play()
+        bum3.Touched:connect(ah)
+        local exp = Instance.new("Sound",t) exp.EmitterSize = 100 exp.Volume = 10 exp.SoundId = "rbxassetid://1577567682" exp:Play()
+        wait(1)
+        using = false rut.Anchored = false poom:Destroy()
+        bum:Destroy() bum1:Destroy() bum2:Destroy() bum3:Destroy()
+        wait(1)
+        kaboom:Destroy()
+        wait(.4)
+        exp:Destroy()
+        wait(10)
+        for i = 1,10 do
+            mus.Volume = mus.Volume +.3
+            cm.Volume = cm.Volume -.1
+            wait(.1)
+        end
+        kaboom1 = false
+    end
+end)
+------Bread Grenade------
+brid = false
+mouse.KeyDown:connect(function(key)
+    if key == "u" and not using and not brid then
+        using = true
+        brid = true
+        function gren_exp(hit)
+            if hit.Parent ~= nil then
+                            local humt = hit.Parent:FindFirstChild("Humanoid")
+                            if humt ~= nil then
+                    if hit.Parent == char then
+                       
+                    else
+                        hit.Transparency = .4 hit.Color = Color3.fromRGB(255,150,0) hit.Material = "Neon"
+                                local meaaa = Instance.new("SpecialMesh",hit) meaaa.MeshType = "Brick"
+                                wait(.7)
+                                 hit.Anchored = true
+                                for i = 1,30 do
+                                    hit.CFrame = hit.CFrame * CFrame.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))
+                                    wait()
+                                end
+                                for i = 1,6 do
+                                    hit.Transparency = hit.Transparency +.1
+                                    hit.CFrame = hit.CFrame * CFrame.new(math.random(-1,1),math.random(-1,1),math.random(-1,1))
+                                    wait()
+                                end
+                                humt.Parent:Destroy()
+                            end
+                        end
+            end
+        end
+        local tmod = Instance.new("Model",workspace) tmod.Name = "tust"
+        local tost = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh createMesh("SpecialMesh",tost,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld = CreateWeld("Weld",tost,ra,tost,CFrame.new(0,-1.5,0),CFrame.fromEulerAnglesXYZ(0,0,3.1))
+        local tost1 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh1 createMesh("SpecialMesh",tost1,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld1 = CreateWeld("Weld",tost1,tost1,tost,CFrame.new(0,0,.16),CFrame.new(0,0,0))
+        local tost2 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh2 createMesh("SpecialMesh",tost2,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld2 = CreateWeld("Weld",tost2,tost2,tost,CFrame.new(0,0,.32),CFrame.new(0,0,0))
+        local tost3 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh3 createMesh("SpecialMesh",tost3,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld3 = CreateWeld("Weld",tost3,tost3,tost,CFrame.new(0,0,.48),CFrame.new(0,0,0))
+        local tost4 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh4 createMesh("SpecialMesh",tost4,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld4 = CreateWeld("Weld",tost4,tost4,tost,CFrame.new(0,0,-.16),CFrame.new(0,0,0))
+        local tost5 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh5 createMesh("SpecialMesh",tost5,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld5 = CreateWeld("Weld",tost5,tost5,tost,CFrame.new(0,0,-.32),CFrame.new(0,0,0))
+        local tost6 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh6 createMesh("SpecialMesh",tost6,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld6 = CreateWeld("Weld",tost6,tost6,tost,CFrame.new(0,0,-.48),CFrame.new(0,0,0))
+        local tost7 = CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh7 createMesh("SpecialMesh",tost7,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld7 = CreateWeld("Weld",tost7,tost7,tost,CFrame.new(0,0,-.64),CFrame.new(0,0,0))
+        local tost8= CreatePart(tmod,"Plastic",0,0,"White","tast",Vector3.new(1.248, 1.264, 0.16),false,false)
+        local tmesh8 createMesh("SpecialMesh",tost8,"FileMesh","1614924885","1614940093",Vector3.new(0.003, 0.003, 0.003))
+        local tweld8 = CreateWeld("Weld",tost8,tost8,tost,CFrame.new(0,0,.64),CFrame.new(0,0,0))
+        function oobread(hit)
+            if hit.Parent ~= nil then
+                local huma = hit.Parent:FindFirstChildOfClass("Humanoid")
+                if huma ~= nil then
+                    if hit.Parent == char then
+                       
+                    else
+                        for i = 1,100 do
+                            huma.WalkToPoint = tost.Position
+                            wait(.05)
+                        end
+                    end
+                end
+            end
+        end
+        for i = 1,5 do
+            rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.1) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.15,0,.66)
+            wait()
+        end
+        wait(.6)
+        local vel = Instance.new("BodyVelocity",tost) vel.MaxForce = Vector3.new(99999,99999,99999)
+        vel.Velocity = ra.CFrame.lookVector * -30
+        tweld:Destroy()
+        for i = 1,5 do
+            rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(0,0,.1) rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.15,0,-.66)
+            wait()
+        end
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1) rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,3.145,0)
+        vel:Destroy()
+        wait(.2)
+        tost.CanCollide = true tost1.CanCollide = true tost2.CanCollide = true tost3.CanCollide = true tost4.CanCollide = true tost5.CanCollide = true tost6.CanCollide = true tost7.CanCollide = true tost8.CanCollide = true
+        local obread = CreatePart(tmod,"Ice",0,1,"White","obread",Vector3.new(40,40,40),true,false) obread.CFrame = tost.CFrame obread.Touched:connect(oobread)
+        wait(3)
+        obread:Destroy()
+        wait(1)
+        using = false
+        tost.Touched:connect(oobread) tost1.Touched:connect(oobread) tost2.Touched:connect(oobread) tost3.Touched:connect(oobread) tost4.Touched:connect(oobread) tost5.Touched:connect(oobread) tost6.Touched:connect(oobread) tost7.Touched:connect(oobread) tost8.Touched:connect(oobread)
+        local boom = Instance.new("Explosion",tost) boom.Visible = false boom.Position = tost.Position boom.BlastPressure = 100000 boom.BlastRadius = 10
+        local bah = CreatePart(tmod,"Neon",0,0,"Deep Orange","bah",Vector3.new(2,2,2),true,false) bah.Position = tost.Position bah.Shape = "Ball"
+        bah.Color = Color3.fromRGB(255,160,0) bah.Touched:connect(gren_exp)
+        local tweeni = TweenInfo.new(
+            .3,
+            Enum.EasingStyle.Quint,
+            Enum.EasingDirection.In,
+            0,
+            false,
+            0)
+        local size = {Size = Vector3.new(20,20,20), Color = Color3.fromRGB(255,0,0), Transparency = 1}
+        local tsize = tweens:Create(bah,tweeni,size)
+        tsize:Play()
+        brid = false
+        wait(.3)
+        bah:Destroy()
+        wait(5)
+        tmod:Destroy()
+    end
+end)
+------Chat Func.------
+bbg = Instance.new("BillboardGui",h)
+bbg.Size = UDim2.new(0,200,0,50)
+bbg.StudsOffset = Vector3.new(0,2,0)
+bbgTl = Instance.new("TextLabel",bbg)
+bbgTl.BackgroundTransparency = 1
+bbgTl.Size = UDim2.new(10,0,1,0)
+bbgTl.Position = UDim2.new(-4.5,0,0,0)
+bbgTl.Font = "Cartoon"
+bbgTl.Text = " "
+bbgTl.TextSize = 30
+bbgTl.TextStrokeColor3 = Color3.fromRGB(255,160)
+bbgTl.TextColor3 = Color3.fromRGB(255,255,255)
+bbgTl.TextStrokeTransparency = 0
+bbgTl.TextWrapped = true
+plr.Chatted:connect(function(msg)
+    bbgTl.Text = msg
+    wait(5)
+    if bbgTl.Text == msg then
+        bbgTl.Text = " "
+    end
+end)
+------...------
+mouse.KeyDown:connect(function(key)
+    if key == "=" and not using then
+        using = true
+        for i = 1,5 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.15,0,.3)
+            ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(-.15,0,-.3)
+            wait()
+        end
+        local hugbox = CreatePart(char,"Plastic",0,1,"White","Hugs",Vector3.new(3,5,3),false,false)
+        local huw = CreateWeld("Weld",hugbox,t,hugbox,CFrame.new(0,0,-2),CFrame.new(0,0,0))
+        function hugs(hug)
+            if hug.Parent ~= nil then
+                local wanthugs = hug.Parent:FindFirstChild("Humanoid")
+                if wanthugs ~= nil then
+                    if hug.Parent == char then
+                       
+                    else
+                        hugbox:Destroy() wanthugs.Health = wanthugs.Health +35 wanthugs.PlatformStand = false wanthugs.Sit = false
+                        for _,q in pairs(wanthugs.Parent.Head:GetChildren()) do
+                            if q:IsA("Decal") then
+                                q.Transparency = 1
+                            end
+                        end
+                        local o = Instance.new("Decal",wanthugs.Parent.Head) o.Texture = "http://www.roblox.com/asset/?id=388881187"
+                        h.face.Transparency = 1
+                        local cface = Instance.new("Decal",h) cface.Texture = "http://www.roblox.com/asset/?id=158131972"
+                        local hugw = CreateWeld("Weld",char,wanthugs.Parent.Head,t,CFrame.new(0,-1.5,-1.2),CFrame.fromEulerAnglesXYZ(0,3.1,0))
+                        wait(.2)
+                        for i = 1,10 do
+                            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.1,0,.03) rs.C0 = rs.C0 * CFrame.new(0,-.06,0)
+                            ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(.1,0,-.03) ls.C0 = ls.C0 * CFrame.new(0,-.06,0)
+                            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(.05,.04,.04)
+                            wait()
+                        end
+                        wait(2.2)
+                        o:Destroy()
+                        for _,q in pairs(wanthugs.Parent.Head:GetChildren()) do
+                            if q:IsA("Decal") then
+                                q.Transparency = 0
+                            end
+                        end
+                        cface:Destroy()
+                        h.face.Transparency = 0
+                        hugw:Destroy()
+                        char.Animate.Disabled = false
+                    end
+                end
+            end
+        end
+        hugbox.Touched:connect(hugs)
+        wait(3)
+        for i = 1,5 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(.15,0,-.3)
+            ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(.15,0,.3)
+            wait()
+        end
+        hugbox:Destroy()
+        using = false
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+    end
+end)
+------Decapitate------
+dec = false
+mouse.KeyDown:connect(function(key)
+    if key == "n" and not using and not dec then
+        local hum1 = mouse.Target.Parent:FindFirstChildOfClass("Humanoid")
+        if hum1 ~= nil then
+            local tp = Instance.new("Part",t) tp.Anchored = true tp.Size = t.Size tp.Transparency = 1 tp.CFrame = t.CFrame tp.CanCollide = false
+            using = true dec = true char.Animate.Disabled = true
+            t.Anchored = true hum.WalkSpeed = 0 hum.JumpPower = 0
+            disshit = hum1.Parent
+            h1 = hum1.Parent.Head
+            t1 = hum1.Parent.Torso
+            ra1 = hum1.Parent["Right Arm"]
+            la1 = hum1.Parent["Left Arm"]
+            rl1 = hum1.Parent["Right Leg"]
+            ll1 = hum1.Parent["Left Leg"]
+            hum1.WalkSpeed = 0 hum1.JumpPower = 0 t1.Anchored = true
+            t.CFrame = t1.CFrame * CFrame.new(0,0,-2) * CFrame.fromEulerAnglesXYZ(0,3.1,0)
+            for i = 1,5 do
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,.1,.4) * CFrame.new(0,-.15,0) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,-.1,-.4) * CFrame.new(0,-.15,0)
+                wait()
+            end
+            wait(.1)
+            local chunc = Instance.new("Sound",h1) chunc.SoundId = "rbxassetid://314390675" chunc.Volume = 2 chunc.Pitch = .7 chunc:Play()
+            for i = 1,10 do
+                chunc:Play()
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,.06) * CFrame.new(.05,-.03,0) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.06) * CFrame.new(-.05,-.03,0)
+                wait(.05)
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.06) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,0,.06)
+                wait(.1)
+            end
+            for i,v in pairs(disshit:GetChildren()) do
+                if v.Name == "HumanoidRootPart" then
+                    v:Destroy()
+                end
+            end
+            t1.Anchored = false h1.Anchored = false ra1.Anchored = false la1.Anchored = false rl1.Anchored = false ll1.Anchored = false
+            hum1.PlatformStand = true
+            hum1.Parent.Head.Anchored = false
+            disshit:BreakJoints()
+            for i,v in pairs(h1:GetChildren()) do
+                if v:IsA("Decal") then
+                    v:Destroy()
+                end
+            end
+            ooww = Instance.new("Decal",h1) ooww.Texture = "http://www.roblox.com/asset/?id=1253783230"
+            at2 = Instance.new("Attachment",t1) at2.Position = Vector3.new(1,.8,0) at2.Position = Vector3.new(1,.8,0)
+            at = Instance.new("Attachment",ra1) at.Name = "oof" at.Position = Vector3.new(-.5,.8,0)
+            balls = Instance.new("BallSocketConstraint",ra1) balls.Attachment0 = at2 balls.Attachment1 = at
+            at21 = Instance.new("Attachment",t1) at21.Position = Vector3.new(-1,.8,0) at21.Position = Vector3.new(-1,.8,0) at21.Orientation = Vector3.new(0,180,0)
+            at1 = Instance.new("Attachment",la1) at.Name = "oof" at1.Position = Vector3.new(.5,.8,0)
+            balls1 = Instance.new("BallSocketConstraint",la1) balls1.Attachment0 = at21 balls1.Attachment1 = at1
+            owihatedis = Instance.new("Attachment",t1) owihatedis.Position = Vector3.new(.6,-1,0) oihd = Instance.new("Attachment",rl1) oihd.Position = Vector3.new(.1,1,0) oww = Instance.new("BallSocketConstraint",rl1) oww.Attachment0 = owihatedis oww.Attachment1 = oihd
+            nek = Instance.new("Attachment",h1) nek2 = Instance.new("Attachment",t1) nek2.Position = Vector3.new(0,1,0) nek.Position = Vector3.new(0,-.5,0) nball = Instance.new("RopeConstraint",h1) nball.Length = 5000 nball.Visible = false nball.Attachment0 = nek nball.Attachment1 = nek2
+            owihatedis2 = Instance.new("Attachment",t1) owihatedis2.Position = Vector3.new(-.6,-1,0) oihd2 = Instance.new("Attachment",ll1) oihd2.Position = Vector3.new(-.1,1,0) oww2 = Instance.new("BallSocketConstraint",ll1) oww2.Attachment0 = owihatedis2 oww2.Attachment1 = oihd2
+            box = Instance.new("Part",ra1) box.Size = Vector3.new(1,1,1) box.Transparency = 1
+        box1 = Instance.new("Part",la1) box1.Size = Vector3.new(1,1,1) box1.Transparency = 1
+        box2 = Instance.new("Part",rl1) box2.Size = Vector3.new(1,1,1) box2.Transparency = 1
+        box3 = Instance.new("Part",ll1) box3.Size = Vector3.new(1,1,1) box3.Transparency = 1
+        box4 = Instance.new("Part",t1) box4.Size = t.Size - Vector3.new(0,.2,0) box4.Transparency = 1
+        bw = Instance.new("Weld",box) bw.Part0 = box bw.Part1 = ra1 bw.C0 = bw.C0 * CFrame.new(0,.5,0)
+        bw1 = Instance.new("Weld",box1) bw1.Part0 = box1 bw1.Part1 = la1 bw1.C0 = bw1.C0 * CFrame.new(0,.5,0)
+        bw2 = Instance.new("Weld",box2) bw2.Part0 = box2 bw2.Part1 = rl1 bw2.C0 = bw2.C0 * CFrame.new(0,.5,0)
+        bw3 = Instance.new("Weld",box3) bw3.Part0 = box3 bw3.Part1 = ll1 bw3.C0 = bw3.C0 * CFrame.new(0,.5,0)
+        bw4 = Instance.new("Weld",box4) bw4.Part0 = box4 bw4.Part1 = t1  bw4.C0 = bw4.C0 * CFrame.new(0,.2,0)
+        local blud = Instance.new("Part",h1) blud.Shape = "Cylinder" blud.Size = Vector3.new(0.05, 0.77, 0.83) blud.Material = "Glass" blud.BrickColor = BrickColor.new("Crimson") local bludw = Instance.new("Weld",blud) bludw.Part0 = h1 bludw.Part1 = blud bludw.C0 = bludw.C0 * CFrame.new(0,-.59,0) * CFrame.fromEulerAnglesXYZ(0,0,1.55)
+        local blud1 = Instance.new("Part",t1) blud1.Shape = "Cylinder" blud1.Size = Vector3.new(0.05, 0.77, 0.83) blud1.Material = "Glass" blud1.BrickColor = BrickColor.new("Crimson") local bludw1 = Instance.new("Weld",blud1) bludw1.Part0 = t1 bludw1.Part1 = blud1 bludw1.C0 = bludw1.C0 * CFrame.new(0,1,0) * CFrame.fromEulerAnglesXYZ(0,0,1.55)
+        local hweld = CreateWeld("Weld",t1,h1,ra,CFrame.new(-1,-1,0),CFrame.fromEulerAnglesXYZ(0,0,0)) hweld.C0 = hweld.C0 * CFrame.fromEulerAnglesXYZ(0,0,3.1)
+            for i = 1,2 do
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(0,0,.6) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,0,-.6)
+                wait()
+            end
+            wait(.4)
+            for i = 1,5 do
+                rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.4,0,0) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(0,0,.6)
+                wait()
+            end
+            hweld:Destroy()
+            rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        t.Anchored = false hum.WalkSpeed = 16 hum.JumpPower = 50 char.Animate.Disabled = false
+        t.CFrame = tp.CFrame
+        tp:Destroy()
+        using = false
+        wait(5)
+        for i = 1,10 do
+            ra1.Transparency = ra1.Transparency +.1
+            la1.Transparency = la1.Transparency +.1
+            rl1.Transparency = rl1.Transparency +.1
+            ll1.Transparency = ll1.Transparency +.1
+            h1.Transparency = h1.Transparency +.1
+            t1.Transparency = t1.Transparency +.1
+            blud.Transparency = blud.Transparency +.1
+            blud1.Transparency = blud1.Transparency +.1
+            wait(.1)
+        end
+        disshit:Destroy()
+        dec = false
+        end
+    end
+end)
+--------Anti-stun------
+mouse.KeyDown:connect(function(key)
+    if key == "n" then
+        using = false
+        h.Anchored = false
+        t.Anchored = false
+        ra.Anchored = false
+        la.Anchored = false
+        rl.Anchored = false
+        ll.Anchored = false
+        for i,v in pairs(char:GetChildren()) do
+            if v:IsA("Accessory") then
+                v.Handle.Anchored = false
+            end
+        end
+        dec = false
+        char.Animate.Disabled = false hum.WalkSpeed = 16 hum.JumpPower = 50
+        hum.PlatformStand = false brda.Anchored = false rut.Anchored = false
+    end
+end)
+------Dance------
+mouse.KeyDown:connect(function(key)
+    if key == "m" and not using then
+        using = true
+        hum.WalkSpeed = 0 hum.JumpPower = 0 mus.Volume = 0 tripoloski.Volume = 5
+        for i = 1,5 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.31,0,0) * CFrame.new(0,-.15,-.03)
+            ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(-.31,0,0) * CFrame.new(0,-.15,-.03)
+            rh.C0 = rh.C0 * CFrame.new(0,0,.2)
+            lh.C0 = lh.C0 * CFrame.new(0,0,.2)
+            wait()
+        end
+        wait(.5)
+        for i = 1,6 do
+            for i = 1,5 do
+            rh.C0 = rh.C0 * CFrame.new(0,.2,0)
+            lh.C0 = lh.C0 * CFrame.new(0,.2,0)
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,-.2)
+            wait()
+            end
+            wait(.05)
+            for i = 1,5 do
+            rh.C0 = rh.C0 * CFrame.new(0,-.2,0)
+            lh.C0 = lh.C0 * CFrame.new(0,-.2,0)
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,.2)
+            wait()
+            end
+        end
+        for i = 1,15 do
+            for i = 1,2 do
+            rh.C0 = rh.C0 * CFrame.new(0,.5,0)
+            lh.C0 = lh.C0 * CFrame.new(0,.5,0)
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,-.5)
+            wait()
+            end
+            for i = 1,2 do
+            rh.C0 = rh.C0 * CFrame.new(0,-.5,0)
+            lh.C0 = lh.C0 * CFrame.new(0,-.5,0)
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,.5)
+            wait()
+            end
+        end
+        for i = 1,25 do
+            rh.C0 = rh.C0 * CFrame.new(0,1,0)
+            lh.C0 = lh.C0 * CFrame.new(0,1,0)
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,-1)
+            wait(.03)
+            rh.C0 = rh.C0 * CFrame.new(0,-1,0)
+            lh.C0 = lh.C0 * CFrame.new(0,-1,0)
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,1)
+            wait()
+        end
+        local ow = Instance.new("Decal",h) ow.Texture = "http://www.roblox.com/asset/?id=271100777"
+        local chunc = Instance.new("Sound",t) chunc.SoundId = "rbxassetid://314390675" chunc.Volume = 5 chunc:Play()
+        h.face.Transparency = 1
+        for c = 1,2 do
+            rutj.C0 = rutj.C0 * CFrame.new(0,0,-.875)
+            rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(-.775,0,0) * CFrame.new(0,.75,0)
+            lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(-.775,0,0) * CFrame.new(0,.75,0)
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(-.7,0,0) ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(-.7,0,0)
+            wait()
+        end
+        local aaaa = Instance.new("Sound",t) aaaa.SoundId = "rbxassetid://633394595" aaaa.Volume = 5 aaaa:Play()
+        wait(1)
+        ow:Destroy()
+        local wot = Instance.new("Decal",h) wot.Texture = "http://www.roblox.com/asset/?id=1077397727"
+        for i = 1,60 do
+            rs.C0 = rs.C0 * CFrame.fromEulerAnglesXYZ(math.random(-2,2),math.random(-2,2),math.random(-2,2))
+            ls.C0 = ls.C0 * CFrame.fromEulerAnglesXYZ(math.random(-2,2),math.random(-2,2),math.random(-2,2))
+            nec.C0 = nec.C0 * CFrame.fromEulerAnglesXYZ(math.random(-2,2),math.random(-2,2),math.random(-2,2))
+            rutj.C0 = rutj.C0 * CFrame.fromEulerAnglesXYZ(math.random(-2,2),math.random(-2,2),math.random(-2,2))
+            rh.C0 = rh.C0 * CFrame.fromEulerAnglesXYZ(math.random(-2,2),math.random(-2,2),math.random(-2,2))
+            lh.C0 = lh.C0 * CFrame.fromEulerAnglesXYZ(math.random(-2,2),math.random(-2,2),math.random(-2,2))
+            wait()
+        end
+        local boom = Instance.new("Explosion",t) boom.Position = t.Position boom.BlastRadius = 0
+        rs.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rs.C0 = rs.C0 * CFrame.new(0,.5,1)
+        ls.C0 = CFrame.fromEulerAnglesXYZ(0,-14.1,0) ls.C0 = ls.C0 * CFrame.new(0,.5,1)
+        rh.C0 = CFrame.fromEulerAnglesXYZ(0,-4.7,0) rh.C0 = rh.C0 * CFrame.new(0,-1,1)
+        lh.C0 = CFrame.fromEulerAnglesXYZ(0,4.7,0) lh.C0 = lh.C0 * CFrame.new(0,-1,1)
+        nec.C0 = CFrame.fromEulerAnglesXYZ(4.7,0,9.4) nec.C0 = nec.C0 * CFrame.new(0,0,1)
+        rutj.C0 = CFrame.fromEulerAnglesXYZ(-4.7,9.4,0)
+        hum.WalkSpeed = 16 hum.JumpPower = 50 h.face.Transparency = 0 wot:Destroy()
+        using = false mus.Volume = 2 tripoloski.Volume = 0
+        wait(.7)
+        boom:Destroy()
+    end
+end)
+------Music Change------
+mouse.KeyDown:connect(function(key)
+    if key == "1" then
+        local mu = math.random(1,5)
+        if mu == 1 then
+            mus.Volume = 2
+            cm.Volume = 0
+            tripoloski.Volume = 0
+            bochka.Volume = 0
+            a13.Volume = 0
+        end
+        if mu == 2 then
+            mus.Volume = 0
+            cm.Volume = 2
+            tripoloski.Volume = 0
+            bochka.Volume = 0
+            a13.Volume = 0
+        end
+        if mu == 3 then
+            mus.Volume = 0
+            cm.Volume = 0
+            tripoloski.Volume = 5
+            bochka.Volume = 0
+            a13.Volume = 0
+        end
+        if mu == 4 then
+            mus.Volume = 0
+            cm.Volume = 0
+            tripoloski.Volume = 0
+            bochka.Volume = 4
+            a13.Volume = 0
+        end
+        if mu == 5 then
+            mus.Volume = 0
+            cm.Volume = 0
+            tripoloski.Volume = 0
+            bochka.Volume = 0
+            a13.Volume = 6
+        end
+    end
+end)
+-----------------END----------------
