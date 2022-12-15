@@ -1,0 +1,1250 @@
+--By Rufus14
+--Converted with ttyyuu12345's model to script plugin v4
+Tool0 = Instance.new("Tool")
+Part1 = Instance.new("Part")
+Part2 = Instance.new("Part")
+Sound3 = Instance.new("Sound")
+Sound4 = Instance.new("Sound")
+Sound5 = Instance.new("Sound")
+Sound6 = Instance.new("Sound")
+Sound7 = Instance.new("Sound")
+Sound8 = Instance.new("Sound")
+Sound9 = Instance.new("Sound")
+FlangeSoundEffect10 = Instance.new("FlangeSoundEffect")
+Sound11 = Instance.new("Sound")
+Sound12 = Instance.new("Sound")
+ReverbSoundEffect13 = Instance.new("ReverbSoundEffect")
+Sound14 = Instance.new("Sound")
+Weld15 = Instance.new("Weld")
+Weld16 = Instance.new("Weld")
+Weld17 = Instance.new("Weld")
+Sound18 = Instance.new("Sound")
+Sound19 = Instance.new("Sound")
+Part20 = Instance.new("Part")
+Part21 = Instance.new("Part")
+Script22 = Instance.new("Script")
+Tool0.Name = "cross"
+Tool0.ToolTip = "great for banishers"
+Part1.Name = "ripoffhandle"
+Part1.Parent = Tool0
+Part1.CFrame = CFrame.new(-79.2499695, 1.10928917, -48.25, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Part1.Position = Vector3.new(-79.2499695, 1.10928917, -48.25)
+Part1.Color = Color3.new(0.960784, 0.803922, 0.188235)
+Part1.Size = Vector3.new(0.5, 0.400000006, 2.5)
+Part1.BottomSurface = Enum.SurfaceType.Smooth
+Part1.BrickColor = BrickColor.new("Bright yellow")
+Part1.TopSurface = Enum.SurfaceType.Smooth
+Part1.brickColor = BrickColor.new("Bright yellow")
+Part2.Name = "Handle"
+Part2.Parent = Tool0
+Part2.CFrame = CFrame.new(-79.9999695, 1.10928917, -48.25, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Part2.Position = Vector3.new(-79.9999695, 1.10928917, -48.25)
+Part2.Color = Color3.new(0.960784, 0.803922, 0.188235)
+Part2.Size = Vector3.new(4, 0.400000006, 0.5)
+Part2.BottomSurface = Enum.SurfaceType.Smooth
+Part2.BrickColor = BrickColor.new("Bright yellow")
+Part2.TopSurface = Enum.SurfaceType.Smooth
+Part2.brickColor = BrickColor.new("Bright yellow")
+Sound3.Name = "hold"
+Sound3.Parent = Part2
+Sound3.SoundId = "rbxassetid://4361093477"
+Sound3.Volume = 3
+Sound4.Name = "BOOM"
+Sound4.Parent = Part2
+Sound4.SoundId = "rbxassetid://141679994"
+Sound4.Volume = 3
+Sound5.Name = "NOSCOPE"
+Sound5.Parent = Part2
+Sound5.SoundId = "rbxassetid://151030090"
+Sound5.Volume = 2
+Sound6.Name = "HEADSHOT"
+Sound6.Parent = Part2
+Sound6.SoundId = "rbxassetid://131313234"
+Sound6.Volume = 5
+Sound7.Name = "HEADSHOT2"
+Sound7.Parent = Part2
+Sound7.SoundId = "rbxassetid://147936251"
+Sound7.Volume = 4
+Sound8.Name = "SHOT"
+Sound8.Parent = Part2
+Sound8.SoundId = "rbxassetid://2756050321"
+Sound8.Volume = 3
+Sound9.Name = "COMPEL"
+Sound9.Parent = Part2
+Sound9.SoundId = "rbxassetid://270657517"
+Sound9.Volume = 4
+FlangeSoundEffect10.Parent = Sound9
+FlangeSoundEffect10.Rate = 3.5
+FlangeSoundEffect10.Depth = 1
+FlangeSoundEffect10.Mix = 1
+Sound11.Name = "LAZOR"
+Sound11.Parent = Part2
+Sound11.SoundId = "rbxassetid://167115397"
+Sound11.Volume = 2
+Sound12.Name = "CHARGINN"
+Sound12.Parent = Part2
+Sound12.Looped = true
+Sound12.SoundId = "rbxassetid://75421988"
+Sound12.Volume = 4
+ReverbSoundEffect13.Parent = Sound12
+Sound14.Name = "NOTGRABKNIFE"
+Sound14.Parent = Part2
+Sound14.SoundId = "rbxassetid://608618332"
+Sound14.Volume = 10
+Weld15.Name = "shiney"
+Weld15.Parent = Part2
+Weld15.C0 = CFrame.new(-2.28881836e-05, 0.224999905, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Weld15.Part0 = Part2
+Weld15.Part1 = Part21
+Weld15.part1 = Part21
+Weld16.Name = "shiney2"
+Weld16.Parent = Part2
+Weld16.C0 = CFrame.new(0, 0.224999905, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Weld16.Part0 = Part1
+Weld16.Part1 = Part20
+Weld16.part1 = Part20
+Weld17.Name = "ripoff"
+Weld17.Parent = Part2
+Weld17.C0 = CFrame.new(0.75, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Weld17.Part0 = Part2
+Weld17.Part1 = Part1
+Weld17.part1 = Part1
+Sound18.Name = "NOONSFAVMEAL"
+Sound18.Parent = Part2
+Sound18.SoundId = "rbxassetid://1037197054"
+Sound18.Volume = 4
+Sound19.Name = "DEFLECT"
+Sound19.Parent = Part2
+Sound19.SoundId = "rbxassetid://1307059689"
+Sound19.Volume = 3
+Part20.Name = "shiney"
+Part20.Parent = Tool0
+Part20.CFrame = CFrame.new(-79.2499695, 1.33428907, -48.25, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Part20.Position = Vector3.new(-79.2499695, 1.33428907, -48.25)
+Part20.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part20.Size = Vector3.new(0.300000012, 0.0500000007, 2.30000019)
+Part20.BottomSurface = Enum.SurfaceType.Smooth
+Part20.BrickColor = BrickColor.new("Institutional white")
+Part20.Material = Enum.Material.SmoothPlastic
+Part20.Reflectance = 1
+Part20.TopSurface = Enum.SurfaceType.Smooth
+Part20.brickColor = BrickColor.new("Institutional white")
+Part21.Name = "shiney"
+Part21.Parent = Tool0
+Part21.CFrame = CFrame.new(-79.9999924, 1.33428907, -48.25, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Part21.Position = Vector3.new(-79.9999924, 1.33428907, -48.25)
+Part21.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part21.Size = Vector3.new(3.79999924, 0.0500000007, 0.300000131)
+Part21.BottomSurface = Enum.SurfaceType.Smooth
+Part21.BrickColor = BrickColor.new("Institutional white")
+Part21.Material = Enum.Material.SmoothPlastic
+Part21.Reflectance = 1
+Part21.TopSurface = Enum.SurfaceType.Smooth
+Part21.brickColor = BrickColor.new("Institutional white")
+Script22.Parent = Tool0
+coroutine.wrap(function()
+--By Rufus14
+tool = Tool0
+handle = tool.Handle
+
+local owner
+local ownercharacter
+local rootpart
+local charhum
+
+runservice = game:GetService("RunService")
+players = game:GetService("Players")
+
+equipped = false
+clicked = false
+canuse = true
+lifecheck = false
+anim = "idle"
+cananimate = true
+
+handle2weld = handle.ripoff
+handle2c0 = handle2weld.C0
+shineyweld = handle.shiney
+shineyc0 = shineyweld.C0
+shiney2weld = handle.shiney2
+shiney2c0 = shiney2weld.C0
+
+boomsound = handle.BOOM
+shootsound = handle.SHOT
+headshotsound = handle.HEADSHOT
+headshotsound2 = handle.HEADSHOT2
+noscopesound = handle.NOSCOPE
+chargesound = handle.CHARGINN
+lasersound = handle.LAZOR
+deflectsound = handle.DEFLECT
+equip = handle.NOTGRABKNIFE
+kfcnwatermelon = handle.NOONSFAVMEAL
+lookintheyesofgodandknowthatnodemonwillovercomethepowerofthesonthefatherandalltheghoststhedoyoubelieveitpowerofchristcompelsyouthepowerofchristcompelsyouthepoweerrrrrofshristcompelsyouuuu = handle.COMPEL
+music = handle.hold
+
+tool.Equipped:connect(function()
+	equipped = true
+end)
+tool.Unequipped:connect(function()
+	equipped = false
+end)
+--
+tool.Activated:connect(function()
+	clicked = true
+end)
+tool.Deactivated:connect(function()
+	clicked = false
+end)
+
+tool.Equipped:connect(function()
+	canuse = true
+	equip:Play()
+	local this = owner
+	owner = players:GetPlayerFromCharacter(tool.Parent)
+	ownercharacter = owner.Character
+	rootpart = ownercharacter.HumanoidRootPart
+	charhum = ownercharacter:findFirstChildOfClass("Humanoid")
+	if this ~= owner then
+		if ownercharacter.Head:findFirstChild("chat") then
+			ownercharacter.Head:findFirstChild("chat"):destroy()
+		end
+		local billboard = Instance.new("BillboardGui", ownercharacter.Head)
+		billboard.Adornee = ownercharacter.Head
+		billboard.StudsOffset = Vector3.new(-1, 2.5, 0)
+		billboard.Size = UDim2.new(2,0,1,0)
+		billboard.Name = "chat"
+		local text = Instance.new("TextLabel", billboard)
+		text.BackgroundTransparency = 1
+		text.TextStrokeTransparency = 0
+		text.TextStrokeColor3 = Color3.fromRGB(255,255,255)
+		text.TextSize = 25
+		text.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+		text.Size = billboard.Size
+		text.Font = "Code"
+		text.TextColor3 = Color3.fromRGB(255,255,0)
+		text.Text = "protection"
+		coroutine.wrap(function()
+			for i = 1,200 do
+				billboard.StudsOffset = billboard.StudsOffset - Vector3.new(0,-0.0025,0)
+				text.TextTransparency = text.TextTransparency + 0.007
+				text.TextStrokeTransparency = text.TextStrokeTransparency + 0.007
+				runservice.Stepped:wait()
+			end
+			billboard:destroy()
+		end)()
+	end
+	local rightgrip = ownercharacter["Right Arm"]:WaitForChild("RightGrip")
+	rightgrip.C0 = CFrame.new(-0.0231323242, -0.962421417, -1.0267334, 0, 0, -1, 0, -0.999994457, 0, -1, 0, 0)
+	if not lifecheck then
+		music.SoundId = "rbxassetid://4361093477"
+	elseif lifecheck and lifecheck ~= "indeed" then
+		music.SoundId = "rbxassetid://2913619435"
+	elseif lifecheck == "indeed" then
+		music.SoundId = "rbxassetid://295754240"
+	end
+	music:Resume()
+	if lifecheck == "indeed" then
+		anim = "idle"
+		local rightarm = Instance.new("Weld", ownercharacter.Torso)
+		rightarm.Part0 = ownercharacter.Torso
+		rightarm.Part1 = ownercharacter["Right Arm"]
+		rightarm.C0 = CFrame.new(1.5,0,0)
+		rightarm.Name = "RightArmWeldcross"
+		local leftarm = Instance.new("Weld", ownercharacter.Torso)
+		leftarm.Part0 = ownercharacter.Torso
+		leftarm.Part1 = ownercharacter["Left Arm"]
+		leftarm.C0 = CFrame.new(-1.5,0,0)
+		leftarm.Name = "LeftArmWeldcross"
+		local head = Instance.new("Weld", ownercharacter.Torso)
+		head.Part0 = ownercharacter.Torso
+		head.Part1 = ownercharacter.Head
+		head.C0 = CFrame.new(0,1.5,0)
+		head.Name = "HeadWeldcross"
+		local humanoidrootpart = Instance.new("Weld", ownercharacter.HumanoidRootPart)
+		humanoidrootpart.Part0 = ownercharacter.HumanoidRootPart
+		humanoidrootpart.Part1 = ownercharacter.Torso
+		humanoidrootpart.Name = "HumanoidRootPartWeldcross"
+		coroutine.wrap(function()
+			while equipped and lifecheck == "indeed" and runservice.Stepped:wait() do
+				if cananimate then
+					local absvel = rootpart.CFrame:vectorToObjectSpace(rootpart.Velocity)
+					if anim == "idle" then
+						rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.248357773, -1.15785217, -0.660198212, -0.0234374851, 0.959914804, 0.279310286, -0.963011563, 0.053340286, -0.264121324, -0.268436849, -0.275169849, 0.923155606),0.15)
+						rightarm.C0 = rightarm.C0:lerp(CFrame.new(0.874992371, 0.141008854, -0.596240997, 0.50000006, 0.750001609, 0.433009773, -0.150381878, 0.567591846, -0.809459567, -0.852868795, 0.33961302, 0.396582663),0.15)
+						leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.2557373, -0.044418335, -0.835590363, 0.934456587, -0.2350021, -0.267516464, -0.0593904369, 0.637900949, -0.767825007, 0.351089478, 0.733386993, 0.58213377),0.15)
+						humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.984807849, 0, 0.173648179, 0, 1, 0, -0.173648193, 0, 0.984807849) * CFrame.fromEulerAnglesXYZ(absvel.z/100,0,-absvel.x/100),0.15)
+						head.C0 = head.C0:lerp(CFrame.new(0, 1.49998355, 0, 0.984807789, 0, -0.173648179, 0, 1, 0, 0.173648179, 0, 0.984807789),0.15)
+						runservice.Stepped:wait()
+					elseif anim == "scope" then
+						rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.248357773, -1.15785217, -0.660198212, -0.0234374851, 0.959914804, 0.279310286, -0.963011563, 0.053340286, -0.264121324, -0.268436849, -0.275169849, 0.923155606),0.15)
+						rightarm.C0 = rightarm.C0:lerp(CFrame.new(0.809280396, 0.364839554, -0.920059204, 0.191511169, 0.972948372, 0.12920922, -0.116976522, 0.153333753, -0.981226504, -0.974494755, 0.17280136, 0.143177241),0.15)
+						leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.49999619, 0.41317153, -0.492401123, 1, 0, 0, 0, 0.173646122, -0.984808087, 0, 0.984808207, 0.173646107),0.15)
+						humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.173648149, 0, -0.984807849, 0, 1, 0, 0.984807849, 0, 0.173648134),0.15)
+						head.C0 = head.C0:lerp(CFrame.new(0, 1.49998379, 0, 0.173648149, 0, 0.984807789, 0, 1, 0, -0.984807789, 0, 0.173648149),0.15)
+						runservice.Stepped:wait()
+					elseif anim == "shoot" then
+						rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.248357773, -1.15785217, -0.660198212, -0.0234374851, 0.959914804, 0.279310286, -0.963011563, 0.053340286, -0.264121324, -0.268436849, -0.275169849, 0.923155606),0.15)
+						rightarm.C0 = rightarm.C0:lerp(CFrame.new(0.921146393, 1.04831123, -0.980117798, 0.191510394, 0.724376798, -0.662268221, -0.116975948, -0.653091669, -0.748176575, -0.974494457, 0.220755547, -0.0403396413),0.15)
+						leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.65689468, 0.365976334, 0.224777222, 0.499998748, 0.813797832, 0.296194881, -0.150380298, 0.418411076, -0.895711064, -0.852868319, 0.403317034, 0.33158794),0.15)
+						humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.163175866, 0.0593911558, -0.98480773, -0.342016339, 0.939682305, 0, 0.925416529, 0.336824059, 0.173648134),0.15)
+						head.C0 = head.C0:lerp(CFrame.new(-0.16840744, 1.46983147, -0.0297012329, 0.173647925, -0.336824208, 0.925416589, 6.14207295e-07, 0.939692736, 0.342020094, -0.984807849, -0.0593905188, 0.163175866),0.15)
+						runservice.Stepped:wait()
+					end
+				end
+			end
+			rightarm:destroy()
+			leftarm:destroy()
+			head:destroy()
+			humanoidrootpart:destroy()
+		end)()
+	end
+	coroutine.wrap(function()
+		local function makeff()
+			local canfieldanim = true
+			local field = Instance.new("Part", workspace)
+			if lifecheck == "indeed" then
+				field.Size = Vector3.new(30,30,30)
+				field.BrickColor = BrickColor.new("Institutional white")
+				field.Material = "Neon"
+			elseif lifecheck and lifecheck ~= "indeed" then
+				field.Size = Vector3.new(20,20,20)
+				field.BrickColor = BrickColor.new("Institutional white")
+			elseif not lifecheck then
+				field.Size = Vector3.new(15,15,15)
+				field.BrickColor = BrickColor.new("New Yeller")
+			end
+			field.CanCollide = false
+			field.Anchored = true
+			field.Name = "omg"..string.lower(owner.Name)
+			field.Shape = "Ball"
+			field.Material = "ForceField"
+			field.Transparency = 1
+			local function deflect(WHO)
+				if WHO:findFirstChild("Head") then
+					if WHO.Head:findFirstChild("fuckoff") then return end
+					if canfieldanim then
+						canfieldanim = false
+						deflectsound:Play()
+						field.Transparency = 0
+						coroutine.wrap(function()
+							for i = 1,40 do
+								field.Transparency = field.Transparency + 0.025
+								runservice.Stepped:wait()
+							end
+							canfieldanim = true
+						end)()
+					end
+					WHO.Head.CFrame = CFrame.new(WHO.Head.Position, handle.Position)
+					local velocity = Instance.new("BodyVelocity", WHO.Head)
+					velocity.Name = "fuckoff"
+					velocity.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+					velocity.Velocity = WHO.Head.CFrame.lookVector * -70
+					game.Debris:AddItem(velocity, 0.2)
+				end
+			end
+			field.Touched:connect(function(WHAT)
+				if WHAT.Parent ~= ownercharacter then
+					if string.find(string.lower(WHAT.Parent.Name), "furry") then
+						deflect(WHAT.Parent)
+					end
+					if string.find(string.lower(WHAT.Parent.Name), "zombie") then
+						deflect(WHAT.Parent)
+					end
+					if string.find(string.lower(WHAT.Parent.Name), "demon") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("Torso") then
+						if WHAT.Parent.Torso:findFirstChildOfClass("Sound") then
+							if WHAT.Parent.Torso:findFirstChildOfClass("Sound").SoundId == "rbxassetid://876316256" then
+								deflect(WHAT.Parent)
+							end
+						end
+					end
+					if WHAT.Parent:findFirstChild("puro") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("TheTail") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("latex") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("transform") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("big mistake") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("LeftClaw") or WHAT.Parent:findFirstChild("RightClaw") then
+						deflect(WHAT.Parent)
+					end
+					if WHAT.Parent:findFirstChild("Head") then
+						if WHAT.Parent.Head:findFirstChild("c-cat_noises") then --stop
+							deflect(WHAT.Parent)
+						end
+					end
+				end
+			end)
+		end
+		while equipped and runservice.Stepped:wait() do
+			if not workspace:findFirstChild("omg"..string.lower(owner.Name)) then
+				makeff()
+			else
+				workspace:findFirstChild("omg"..string.lower(owner.Name)).CFrame = rootpart.CFrame
+			end
+		end
+		if workspace:findFirstChild("omg"..string.lower(owner.Name)) then workspace:findFirstChild("omg"..string.lower(owner.Name)):destroy() end
+	end)()
+end)
+tool.Unequipped:connect(function()
+	music:Pause()
+	lookintheyesofgodandknowthatnodemonwillovercomethepowerofthesonthefatherandalltheghoststhedoyoubelieveitpowerofchristcompelsyouthepowerofchristcompelsyouthepoweerrrrrofshristcompelsyouuuu:Stop()
+end)
+tool.Deactivated:connect(function()
+	if canuse then
+		if not lifecheck then
+			canuse = false
+			lookintheyesofgodandknowthatnodemonwillovercomethepowerofthesonthefatherandalltheghoststhedoyoubelieveitpowerofchristcompelsyouthepowerofchristcompelsyouthepoweerrrrrofshristcompelsyouuuu:Play()
+			local rightarm = Instance.new("Weld", ownercharacter.Torso)
+			rightarm.Part0 = ownercharacter.Torso
+			rightarm.Part1 = ownercharacter["Right Arm"]
+			rightarm.C0 = CFrame.new(1.5,0,0)
+			rightarm.Name = "RightArmWeldcross"
+			local rightleg = Instance.new("Weld", ownercharacter.Torso)
+			rightleg.Part0 = ownercharacter.Torso
+			rightleg.Part1 = ownercharacter["Right Leg"]
+			rightleg.C0 = CFrame.new(0.5,-2,0)
+			rightleg.Name = "RightLegWeldcross"
+			local leftarm = Instance.new("Weld", ownercharacter.Torso)
+			leftarm.Part0 = ownercharacter.Torso
+			leftarm.Part1 = ownercharacter["Left Arm"]
+			leftarm.C0 = CFrame.new(-1.5,0,0)
+			leftarm.Name = "LeftArmWeldcross"
+			local leftleg = Instance.new("Weld", ownercharacter.Torso)
+			leftleg.Part0 = ownercharacter.Torso
+			leftleg.Part1 = ownercharacter["Left Leg"]
+			leftleg.C0 = CFrame.new(-0.5,-2,0)
+			leftleg.Name = "LeftLegWeldcross"
+			local head = Instance.new("Weld", ownercharacter.Torso)
+			head.Part0 = ownercharacter.Torso
+			head.Part1 = ownercharacter.Head
+			head.C0 = CFrame.new(0,1.5,0)
+			head.Name = "HeadWeldcross"
+			local humanoidrootpart = Instance.new("Weld", ownercharacter.HumanoidRootPart)
+			humanoidrootpart.Part0 = ownercharacter.HumanoidRootPart
+			humanoidrootpart.Part1 = ownercharacter.Torso
+			humanoidrootpart.Name = "HumanoidRootPartWeldcross"
+			coroutine.wrap(function()
+				while lookintheyesofgodandknowthatnodemonwillovercomethepowerofthesonthefatherandalltheghoststhedoyoubelieveitpowerofchristcompelsyouthepowerofchristcompelsyouthepoweerrrrrofshristcompelsyouuuu.Playing and equipped do
+					for i = 0,1 , 0.25 do
+						if equipped then
+							rightarm.C0 = rightarm.C0:lerp(CFrame.new(1.63111877, 0.611276627, -0.298833847, 0.925416529, -0.336824059, 0.173648179, 0.163176164, -0.0593862236, -0.984799504, 0.342019945, 0.939689755, -4.67896461e-06),i)
+							leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.57923126, 0.0944194794, 0, 0.98480773, 0.173648179, 0, -0.173646733, 0.984799504, 4.76837158e-06, -8.27014446e-07, 4.67896461e-06, 0.999997258),i)
+							leftleg.C0 = leftleg.C0:lerp(CFrame.new(-0.5, -1.86600685, 0.499988556, 1, 0, 0, 0, 0.866025329, 0.500000238, 0, -0.500000238, 0.866025269),i)
+							rightleg.C0 = rightleg.C0:lerp(CFrame.new(0.5, -1.99998283, -9.53674316e-06, 1, 0, 0, 0, 0.999991655, 4.76837158e-06, 0, 4.76837158e-06, 0.999997258),i)
+							humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, -0.142539978, -0.0853042603, 1, 0, 0, 0, 0.858073294, -0.513505876, 0, 0.513511479, 0.858082712),i)
+							head.C0 = head.C0:lerp(CFrame.new(0, 1.49239063, 0.0868301392, 1, 0, 0, 0, 0.984806776, -0.173653692, 0, 0.173653692, 0.984806776),i)
+							runservice.Stepped:wait()
+						end
+					end
+					for i = 0,1 , 0.25 do
+						if equipped then
+							rightarm.C0 = rightarm.C0:lerp(CFrame.new(1.64085388, 0.448102951, -0.294296265, 0.939692616, -0.342020124, 0, 0.0593898818, 0.163172394, -0.984797418, 0.336823851, 0.925415874, 0.173649922),i)
+							leftleg.C0 = leftleg.C0:lerp(CFrame.new(-0.5, -1.98478603, -0.17364502, 1, 0, 0, 0, 0.984807789, -0.173648, 0, 0.173647985, 0.984807849),i)
+							rightleg.C0 = rightleg.C0:lerp(CFrame.new(0.5, -1.99997807, 7.62939453e-06, 1, 0, 0, 0, 1, 1.86266561e-06, 0, -1.86266539e-06, 1),i)
+							humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 1, 0, 0, 0, 0.984807432, 0.173650041, 0, -0.173650041, 0.984807432),i)
+							head.C0 = head.C0:lerp(CFrame.new(0, 1.49238777, -0.0868225098, 1, 0, 0, 0, 0.984797478, 0.173644468, 0, -0.173649952, 0.984807014),i)
+							runservice.Stepped:wait()
+						end
+					end
+				end
+				canuse = true
+				humanoidrootpart:destroy()
+				head:destroy()
+				rightarm:destroy()
+				leftarm:destroy()
+				leftleg:destroy()
+				rightleg:destroy()
+			end)()
+		elseif lifecheck and lifecheck ~= "indeed" then
+			canuse = false
+			local rightarm = Instance.new("Weld", ownercharacter.Torso)
+			rightarm.Part0 = ownercharacter.Torso
+			rightarm.Part1 = ownercharacter["Right Arm"]
+			rightarm.C0 = CFrame.new(1.5,0,0)
+			rightarm.Name = "RightArmWeldcross"
+			local rightleg = Instance.new("Weld", ownercharacter.Torso)
+			rightleg.Part0 = ownercharacter.Torso
+			rightleg.Part1 = ownercharacter["Right Leg"]
+			rightleg.C0 = CFrame.new(0.5,-2,0)
+			rightleg.Name = "RightLegWeldcross"
+			local leftarm = Instance.new("Weld", ownercharacter.Torso)
+			leftarm.Part0 = ownercharacter.Torso
+			leftarm.Part1 = ownercharacter["Left Arm"]
+			leftarm.C0 = CFrame.new(-1.5,0,0)
+			leftarm.Name = "LeftArmWeldcross"
+			local leftleg = Instance.new("Weld", ownercharacter.Torso)
+			leftleg.Part0 = ownercharacter.Torso
+			leftleg.Part1 = ownercharacter["Left Leg"]
+			leftleg.C0 = CFrame.new(-0.5,-2,0)
+			leftleg.Name = "LeftLegWeldcross"
+			local head = Instance.new("Weld", ownercharacter.Torso)
+			head.Part0 = ownercharacter.Torso
+			head.Part1 = ownercharacter.Head
+			head.C0 = CFrame.new(0,1.5,0)
+			head.Name = "HeadWeldcross"
+			local humanoidrootpart = Instance.new("Weld", ownercharacter.HumanoidRootPart)
+			humanoidrootpart.Part0 = ownercharacter.HumanoidRootPart
+			humanoidrootpart.Part1 = ownercharacter.Torso
+			humanoidrootpart.Name = "HumanoidRootPartWeldcross"
+			local rightgrip = ownercharacter["Right Arm"]:WaitForChild("RightGrip")
+			local ws = charhum.WalkSpeed
+			local jp = charhum.JumpPower
+			charhum.WalkSpeed = 0
+			charhum.JumpPower = 0
+			coroutine.wrap(function()
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.23 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.00186920166, 0.558111191, -0.0767021179, -2.79102642e-05, -1, 2.33054725e-05, 1, -2.79103097e-05, -1.97005488e-06, 1.97070608e-06, 2.33054161e-05, 1),i)
+					runservice.Stepped:wait()
+				end
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.23 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.00199890137, -0.641872406, 1.12329865, 6.43433596e-05, -1, 3.95103561e-05, -1.33738229e-06, -3.95104435e-05, -1, 1, 6.43433086e-05, -1.33992444e-06),i)
+					runservice.Stepped:wait()
+				end
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.23 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.00185394287, -1.78735733, -0.426719666, 1.00994021e-05, -1, 4.36902374e-05, -1, -1.00994648e-05, -1.45057925e-06, 1.45102058e-06, -4.36902228e-05, -1),i)
+					runservice.Stepped:wait()
+				end
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.23 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.0018157959, -0.641872406, -1.07670069, -8.49999997e-05, -1, -3.50000009e-05, -4.37087699e-08, -3.49999973e-05, 1, -0.999994516, 8.4999534e-05, -4.07340224e-08),i)
+					runservice.Stepped:wait()
+				end
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.23 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.00186920166, 0.558111191, -0.0767021179, -2.79102642e-05, -1, 2.33054725e-05, 1, -2.79103097e-05, -1.97005488e-06, 1.97070608e-06, 2.33054161e-05, 1),i)
+					runservice.Stepped:wait()
+				end
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.23 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.00199890137, -0.641872406, 1.12329865, 6.43433596e-05, -1, 3.95103561e-05, -1.33738229e-06, -3.95104435e-05, -1, 1, 6.43433086e-05, -1.33992444e-06),i)
+					runservice.Stepped:wait()
+				end
+				local lastcf = rightgrip.C0
+				for i = 0,1 , 0.2 do
+					rightgrip.C0 = lastcf:lerp(CFrame.new(0.00185394287, -1.78735733, -0.426719666, 1.00994021e-05, -1, 4.36902374e-05, -1, -1.00994648e-05, -1.45057925e-06, 1.45102058e-06, -4.36902228e-05, -1),i)
+					runservice.Stepped:wait()
+				end
+			end)()
+			coroutine.wrap(function()
+				for i = 0,1 , 0.02 do
+					if equipped then
+						rightarm.C0 = rightarm.C0:lerp(CFrame.new(2.06786346, 0.499994516, -0.28225708, 0.342020184, -0.939692616, -2.90916346e-15, -4.10748271e-08, -1.49500146e-08, -1, 0.939692616, 0.342020184, -4.37109229e-08),i)
+						leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.57922745, 0.094419241, -7.62939453e-06, 0.984808147, 0.173646361, 1.49982284e-08, -0.173646361, 0.984808147, -7.5322043e-10, -1.49011701e-08, -1.86260984e-09, 1),i)
+						leftleg.C0 = leftleg.C0:lerp(CFrame.new(-0.881240845, -2.07160878, -7.62939453e-06, 0.984808147, 0.173646361, 1.49982284e-08, -0.173646361, 0.984808147, -7.5322043e-10, -1.49011701e-08, -1.86260984e-09, 1),i)
+						rightleg.C0 = rightleg.C0:lerp(CFrame.new(0.881244659, -2.07160878, -7.62939453e-06, 0.984808147, -0.173646361, 1.49982284e-08, 0.173646361, 0.984808147, 7.5322043e-10, -1.49011701e-08, 1.86260984e-09, 1),i)
+						humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.173648134, 0, 0.984807789, 0, 1, 0, -0.984807789, 0, 0.173648134),i)
+						head.C0 = head.C0:lerp(CFrame.new(0, 1.49998355, 0, 0.173648253, 0, -0.984807789, 0, 1, 0, 0.984807789, 0, 0.173648253),i)
+						runservice.Stepped:wait()
+					end
+				end
+				if equipped then
+					shootsound.PlaybackSpeed = 1+math.random(-10,10)/60
+					shootsound:Play()
+					boomsound.PlaybackSpeed = 1+math.random(-10,10)/60
+					boomsound:Play()
+					local missle = Instance.new("UnionOperation", charhum)
+					local meshh = Instance.new("SpecialMesh", missle)
+					meshh.MeshType = "Sphere"
+					missle.Anchored = true
+					missle.CanCollide = false
+					missle.Size = Vector3.new(4,4,8)
+					missle.Material = "Neon"
+					missle.BrickColor = BrickColor.new("New Yeller")
+					missle.CFrame = ownercharacter.Head.CFrame * CFrame.new(1.5,0,-5)
+					local fallvalue = 0
+					local speedvalue = 5
+					local hitraycast = false
+					local threshold = 0
+					coroutine.wrap(function()
+						while not hitraycast and threshold <= 450 and runservice.Stepped:wait() do
+							threshold = threshold + 1
+							missle.CFrame = missle.CFrame * CFrame.new(0,0,-2)
+							if fallvalue <= 0.01 then
+								fallvalue = fallvalue + 0.000035
+								missle.CFrame = missle.CFrame * CFrame.fromEulerAnglesXYZ(-fallvalue,0,0)
+							end
+							local trail = Instance.new("UnionOperation", charhum)
+							Instance.new("BlockMesh", trail)
+							trail.Anchored = true
+							trail.CanCollide = false
+							trail.Size = Vector3.new(4,4,4)
+							trail.Material = "Neon"
+							trail.CFrame = missle.CFrame * CFrame.new(0,0,4) * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/5,math.random(-10,10)/5,math.random(-10,10)/5)
+							coroutine.wrap(function()
+								for i = 1,15 do
+									trail.Transparency = trail.Transparency + 0.075
+									trail.Size = trail.Size + Vector3.new(0.15,0.15,0.15)
+									runservice.Stepped:wait()
+								end
+								trail:destroy()
+							end)()
+							local exblock = Instance.new("UnionOperation", trail)
+							local shockwave = Instance.new("SpecialMesh", exblock)
+							shockwave.MeshId = "http://www.roblox.com/asset/?id=20329976"
+							shockwave.Scale = Vector3.new(3,5,3)
+							exblock.BrickColor = BrickColor.new("Institutional white")
+							exblock.Anchored = true
+							exblock.Transparency = 0.5
+							exblock.CanCollide = false
+							local cfx,cfy,cfz = missle.CFrame:ToEulerAnglesXYZ()
+							exblock.CFrame = CFrame.new(trail.Position) * CFrame.fromEulerAnglesXYZ(cfx,cfy,cfz) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
+							local rotrandom = math.random(1,2)
+							coroutine.wrap(function()
+								for i = 1,10 do
+									exblock.Transparency = exblock.Transparency + 0.05
+									shockwave.Scale = shockwave.Scale + Vector3.new(0.5,0.2,0.5)
+									if rotrandom == 1 then
+										exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(10),0)
+									else
+										exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(-10),0)
+									end
+									runservice.Stepped:wait()
+								end
+								exblock:destroy()
+							end)()
+							--
+							local rayecast = Ray.new(missle.Position, missle.CFrame.lookVector*missle.Size.z)
+							local rayehit, rayepos, rayesurface = workspace:FindPartOnRayWithIgnoreList(rayecast, {ownercharacter})
+							if rayehit then
+								hitraycast = true
+								if rayesurface then
+									local hitsomeone = false
+									for i,v in pairs(workspace:GetDescendants()) do
+										if v.ClassName == "Model" and v ~= ownercharacter then
+											if v:findFirstChild("Head") then
+												if (v.Head.Position - rayepos).magnitude < 30 then
+													v:BreakJoints()
+													hitsomeone = true
+												end
+											end
+										end
+									end
+									if hitsomeone then
+										local taunt = math.random(1,4)
+										if taunt == 1 then
+											noscopesound:Play()
+											noscopesound.TimePosition = 2.3
+										elseif taunt == 2 then
+											headshotsound:Play()
+										elseif taunt == 3 then
+											headshotsound2:Play()
+										elseif taunt == 4 then
+											kfcnwatermelon:Play()
+										end
+									end
+									local explosionpart = Instance.new("UnionOperation", charhum)
+									explosionpart.Anchored = true
+									explosionpart.CanCollide = false
+									explosionpart.CFrame = CFrame.new(rayepos)
+									local explosionsound = Instance.new("Sound", explosionpart)
+									explosionsound.SoundId = "rbxassetid://967702054"
+									explosionsound:Play()
+									explosionsound.Volume = 4
+									local reverb = Instance.new("ReverbSoundEffect", explosionsound)
+									reverb.DecayTime = 6.5
+									reverb.DryLevel = 5
+									game.Debris:AddItem(explosionpart, explosionsound.TimeLength)
+									local exblock = Instance.new("UnionOperation", charhum)
+									Instance.new("SpecialMesh", exblock).MeshType = "Sphere"
+									exblock.BrickColor = BrickColor.new("Institutional white")
+									exblock.Anchored = true
+									exblock.CanCollide = false
+									exblock.Transparency = 0
+									exblock.CFrame = CFrame.new(rayepos)
+									exblock.Size = Vector3.new(5,5,5)
+									coroutine.wrap(function()
+										for i = 1,40 do
+											exblock.Size = exblock.Size + Vector3.new(2,2,2)
+											exblock.Transparency = exblock.Transparency + 0.025
+											runservice.Stepped:wait()
+										end
+										exblock:destroy()
+									end)()
+									coroutine.wrap(function()
+										for i = 1,25 do --blocks
+											local exblock = Instance.new("UnionOperation", charhum)
+											Instance.new("BlockMesh", exblock)
+											exblock.BrickColor = BrickColor.new("New Yeller")
+											exblock.Anchored = true
+											exblock.CanCollide = false
+											exblock.Material = "Neon"
+											exblock.Transparency = 0.2
+											exblock.CFrame = CFrame.new(rayepos)
+											exblock.Size = Vector3.new(0,0,0)
+											coroutine.wrap(function()
+												for i = 1,20 do
+													exblock.Size = exblock.Size + Vector3.new(1,1,1)
+													exblock.Transparency = exblock.Transparency + 0.03
+													exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/3,math.random(-10,10)/3,math.random(-10,10)/3)
+													runservice.Stepped:wait()
+												end
+												exblock:destroy()
+											end)()
+											wait(0.015)
+										end
+									end)()
+									coroutine.wrap(function() --shockwave
+										for i = 1,15 do
+											local exblock = Instance.new("UnionOperation", charhum)
+											local shockwave = Instance.new("SpecialMesh", exblock)
+											shockwave.MeshId = "http://www.roblox.com/asset/?id=20329976"
+											shockwave.Scale = Vector3.new(3,6.5,3)
+											exblock.BrickColor = BrickColor.new("Institutional white")
+											exblock.Anchored = true
+											exblock.Transparency = 0
+											exblock.CanCollide = false
+											if rayehit.Parent:findFirstChildOfClass("Humanoid") or rayehit.Parent.Parent:findFirstChildOfClass("Humanoid") then
+												exblock.CFrame = CFrame.new(rayepos)
+											else
+												exblock.CFrame = CFrame.new(rayepos, rayepos-rayesurface) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
+											end
+											local rotrandom = math.random(1,2)
+											coroutine.wrap(function()
+												for i = 1,20 do
+													exblock.Transparency = exblock.Transparency + 0.05
+													shockwave.Scale = shockwave.Scale + Vector3.new(1.5,-0.4,1.5)
+													if rotrandom == 1 then
+														exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(10),0)
+													else
+														exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(-10),0)
+													end
+													runservice.Stepped:wait()
+												end
+												exblock:destroy()
+											end)()
+											wait(0.05)
+										end
+									end)()
+								end
+							end
+						end
+						missle:destroy()
+					end)()
+				end
+				for i = 0,1 , 0.1 do
+					if equipped then
+						rightarm.C0 = rightarm.C0:lerp(CFrame.new(1.68267822, 0.96984005, -0.303489685, 0.984807253, -0.0593928285, 0.163175017, 1.81049109e-06, -0.939682603, -0.342016101, 0.173648149, 0.336824, -0.92541647),i)
+						leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.59371948, 0.471656799, -0.383026123, 0.866024017, 0.321394622, -0.383023292, -0.499992967, 0.556664824, -0.663407445, 0, 0.766044378, 0.642787457),i)
+						leftleg.C0 = leftleg.C0:lerp(CFrame.new(-0.5, -1.98478603, -0.17364502, 1, 0, 0, 0, 0.984807789, -0.173648, 0, 0.173647985, 0.984807849),i)
+						rightleg.C0 = rightleg.C0:lerp(CFrame.new(0.5, -1.99997807, 7.62939453e-06, 1, 0, 0, 0, 1, 1.86266561e-06, 0, -1.86266539e-06, 1),i)
+						humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.633022487, 0.111617729, -0.766044497, -0.173646361, 0.984808087, 1.25124586e-08, 0.75440681, 0.133020818, 0.642787635),i)
+						head.C0 = head.C0:lerp(CFrame.new(-0.0665130615, 1.49238777, -0.055809021, 0.642787576, -0.133023173, 0.754406452, 1.19896185e-06, 0.98480773, 0.173648417, -0.766044557, -0.111618131, 0.633022308),i)
+						runservice.Stepped:wait()
+					end
+				end
+				wait(0.5)
+				canuse = true
+				charhum.WalkSpeed = ws
+				charhum.JumpPower = jp
+				leftleg:destroy()
+				rightleg:destroy()
+				for i = 0,1 , 0.04 do
+					if equipped then
+						if canuse then
+							rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.0231323242, -0.962421417, -1.0267334, 0, 0, -1, 0, -0.999994457, 0, -1, 0, 0),i)
+						end
+						rightarm.C0 = rightarm.C0:lerp(CFrame.new(1.5, 0.499994755, -0.5, 1, 0, 0, 0, -4.3709008e-08, -1, 0, 1, -4.3709008e-08),i)
+						leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.5,0,0),i)
+						humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0,0,0),i)
+						head.C0 = head.C0:lerp(CFrame.new(0,1.5,0),i)
+						runservice.Stepped:wait()
+					end
+				end
+				rightarm:destroy()
+				leftarm:destroy()
+				head:destroy()
+				humanoidrootpart:destroy()
+			end)()
+		elseif lifecheck == "indeed" then
+			canuse = false
+			anim = "scope"
+			wait(1)
+			if equipped then
+				if lifecheck == "indeed" then
+					anim = "shoot"
+					shootsound.PlaybackSpeed = 0.7+math.random(-10,10)/60
+					shootsound:Play()
+					boomsound.PlaybackSpeed = 1+math.random(-10,10)/60
+					boomsound:Play()
+					local missle = Instance.new("UnionOperation", charhum)
+					local meshh = Instance.new("SpecialMesh", missle)
+					meshh.MeshType = "Sphere"
+					missle.Anchored = true
+					missle.CanCollide = false
+					missle.Size = Vector3.new(6,6,12)
+					missle.Material = "Neon"
+					missle.BrickColor = BrickColor.new("New Yeller")
+					missle.CFrame = ownercharacter.Head.CFrame * CFrame.new(1.5,0,-7)
+					local fallvalue = 0
+					local speedvalue = 5
+					local hitraycast = false
+					local threshold = 0
+					coroutine.wrap(function()
+						while not hitraycast and threshold <= 450 and runservice.Stepped:wait() do
+							threshold = threshold + 1
+							missle.CFrame = missle.CFrame * CFrame.new(0,0,-3)
+							if fallvalue <= 0.01 then
+								fallvalue = fallvalue + 0.000035
+								missle.CFrame = missle.CFrame * CFrame.fromEulerAnglesXYZ(-fallvalue,0,0)
+							end
+							local trail = Instance.new("UnionOperation", charhum)
+							Instance.new("BlockMesh", trail)
+							trail.Anchored = true
+							trail.CanCollide = false
+							trail.Size = Vector3.new(6,6,6)
+							trail.Material = "Neon"
+							trail.CFrame = missle.CFrame * CFrame.new(0,0,6) * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/5,math.random(-10,10)/5,math.random(-10,10)/5)
+							coroutine.wrap(function()
+								for i = 1,15 do
+									trail.Transparency = trail.Transparency + 0.075
+									trail.Size = trail.Size + Vector3.new(0.15,0.15,0.15)
+									runservice.Stepped:wait()
+								end
+								trail:destroy()
+							end)()
+							local exblock = Instance.new("UnionOperation", trail)
+							local shockwave = Instance.new("SpecialMesh", exblock)
+							shockwave.MeshId = "http://www.roblox.com/asset/?id=20329976"
+							shockwave.Scale = Vector3.new(3,5,3)
+							exblock.BrickColor = BrickColor.new("Institutional white")
+							exblock.Anchored = true
+							exblock.Transparency = 0.5
+							exblock.CanCollide = false
+							local cfx,cfy,cfz = missle.CFrame:ToEulerAnglesXYZ()
+							exblock.CFrame = CFrame.new(trail.Position) * CFrame.fromEulerAnglesXYZ(cfx,cfy,cfz) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
+							local rotrandom = math.random(1,2)
+							coroutine.wrap(function()
+								for i = 1,10 do
+									exblock.Transparency = exblock.Transparency + 0.05
+									shockwave.Scale = shockwave.Scale + Vector3.new(1,0.2,1)
+									if rotrandom == 1 then
+										exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(10),0)
+									else
+										exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(-10),0)
+									end
+									runservice.Stepped:wait()
+								end
+								exblock:destroy()
+							end)()
+							--
+							local rayecast = Ray.new(missle.Position, missle.CFrame.lookVector*missle.Size.z)
+							local rayehit, rayepos, rayesurface = workspace:FindPartOnRayWithIgnoreList(rayecast, {ownercharacter})
+							if rayehit then
+								hitraycast = true
+								if rayesurface then
+									local hitsomeone = false
+									for i,v in pairs(workspace:GetDescendants()) do
+										if v.ClassName == "Model" and v ~= ownercharacter then
+											if v:findFirstChild("Head") then
+												if (v.Head.Position - rayepos).magnitude < 30 then
+													v:BreakJoints()
+													hitsomeone = true
+												end
+											end
+										end
+									end
+									if hitsomeone then
+										local taunt = math.random(1,4)
+										if taunt == 1 then
+											noscopesound:Play()
+											noscopesound.TimePosition = 2.3
+										elseif taunt == 2 then
+											headshotsound:Play()
+										elseif taunt == 3 then
+											headshotsound2:Play()
+										elseif taunt == 4 then
+											kfcnwatermelon:Play()
+										end
+									end
+									local explosionpart = Instance.new("UnionOperation", charhum)
+									explosionpart.Anchored = true
+									explosionpart.CanCollide = false
+									explosionpart.CFrame = CFrame.new(rayepos)
+									local explosionsound = Instance.new("Sound", explosionpart)
+									explosionsound.SoundId = "rbxassetid://967702054"
+									explosionsound:Play()
+									explosionsound.Volume = 6
+									explosionsound.PlaybackSpeed = 0.5
+									local reverb = Instance.new("ReverbSoundEffect", explosionsound)
+									reverb.DecayTime = 6.5
+									reverb.DryLevel = 5
+									game.Debris:AddItem(explosionpart, explosionsound.TimeLength)
+									local exblock = Instance.new("UnionOperation", charhum)
+									Instance.new("SpecialMesh", exblock).MeshType = "Sphere"
+									exblock.BrickColor = BrickColor.new("Institutional white")
+									exblock.Anchored = true
+									exblock.CanCollide = false
+									exblock.Transparency = 0
+									exblock.CFrame = CFrame.new(rayepos)
+									exblock.Size = Vector3.new(5,5,5)
+									coroutine.wrap(function()
+										for i = 1,40 do
+											exblock.Size = exblock.Size + Vector3.new(4,4,4)
+											exblock.Transparency = exblock.Transparency + 0.025
+											runservice.Stepped:wait()
+										end
+										exblock:destroy()
+									end)()
+									coroutine.wrap(function()
+										for i = 1,35 do --blocks
+											local exblock = Instance.new("UnionOperation", charhum)
+											Instance.new("BlockMesh", exblock)
+											exblock.BrickColor = BrickColor.new("New Yeller")
+											exblock.Anchored = true
+											exblock.CanCollide = false
+											exblock.Material = "Neon"
+											exblock.Transparency = 0.2
+											exblock.CFrame = CFrame.new(rayepos)
+											exblock.Size = Vector3.new(0,0,0)
+											coroutine.wrap(function()
+												for i = 1,20 do
+													exblock.Size = exblock.Size + Vector3.new(2,2,2)
+													exblock.Transparency = exblock.Transparency + 0.03
+													exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/3,math.random(-10,10)/3,math.random(-10,10)/3)
+													runservice.Stepped:wait()
+												end
+												exblock:destroy()
+											end)()
+											wait(0.015)
+										end
+									end)()
+									coroutine.wrap(function() --shockwave
+										for i = 1,25 do
+											local exblock = Instance.new("UnionOperation", charhum)
+											local shockwave = Instance.new("SpecialMesh", exblock)
+											shockwave.MeshId = "http://www.roblox.com/asset/?id=20329976"
+											shockwave.Scale = Vector3.new(3,7.5,3)
+											exblock.BrickColor = BrickColor.new("Institutional white")
+											exblock.Anchored = true
+											exblock.Transparency = 0
+											exblock.CanCollide = false
+											if rayehit.Parent:findFirstChildOfClass("Humanoid") or rayehit.Parent.Parent:findFirstChildOfClass("Humanoid") then
+												exblock.CFrame = CFrame.new(rayepos)
+											else
+												exblock.CFrame = CFrame.new(rayepos, rayepos-rayesurface) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
+											end
+											local rotrandom = math.random(1,2)
+											coroutine.wrap(function()
+												for i = 1,20 do
+													exblock.Transparency = exblock.Transparency + 0.05
+													shockwave.Scale = shockwave.Scale + Vector3.new(3,-0.6,3)
+													if rotrandom == 1 then
+														exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(10),0)
+													else
+														exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(0,math.rad(-10),0)
+													end
+													runservice.Stepped:wait()
+												end
+												exblock:destroy()
+											end)()
+											wait(0.05)
+										end
+									end)()
+								end
+							end
+						end
+						missle:destroy()
+					end)()
+					wait(0.5)
+					anim = "idle"
+					canuse = true
+				end
+			end	
+		end
+	end
+end)
+tool.Activated:connect(function()
+	if canuse then
+		if not lifecheck then
+			wait(0.1)
+			if clicked then
+				canuse = false
+				chargesound.PlaybackSpeed = 1
+				chargesound:Play()
+				coroutine.wrap(function()
+					local chargiin = true
+					coroutine.wrap(function()
+						while clicked and equipped and chargiin and wait(0.1) do
+							local exblock = Instance.new("UnionOperation", charhum)
+							Instance.new("BlockMesh", exblock)
+							exblock.BrickColor = BrickColor.new("Institutional white")
+							exblock.Anchored = true
+							exblock.CanCollide = false
+							exblock.Material = "Neon"
+							exblock.Transparency = 0.7
+							exblock.CFrame = CFrame.new(handle.Position)
+							exblock.Size = Vector3.new(6,6,6)
+							coroutine.wrap(function()
+								for i = 1,20 do
+									exblock.Size = exblock.Size - Vector3.new(0.2,0.2,0.2)
+									exblock.Transparency = exblock.Transparency + 0.015
+									exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/3,math.random(-10,10)/3,math.random(-10,10)/3)
+									runservice.Stepped:wait()
+								end
+								exblock:destroy()
+							end)()
+						end
+					end)()
+					for i = 1,300 do
+						if clicked and equipped then
+							chargesound.PlaybackSpeed = chargesound.PlaybackSpeed - 0.0025
+							runservice.Stepped:wait()
+						end
+					end
+					chargiin = false
+					if clicked and equipped then
+						lifecheck = true
+						if workspace:findFirstChild("omg"..string.lower(owner.Name)) then workspace:findFirstChild("omg"..string.lower(owner.Name)):destroy() end
+						music.TimePosition = 0
+						music.SoundId = "rbxassetid://2913619435"
+						lasersound:Play()
+						for i,v in pairs(tool:GetDescendants()) do
+							if v.Name == "shiney" and v.ClassName == "Part" then
+								v.Material = "Neon"
+							end
+						end
+						local holy = Instance.new("Fire", handle)
+						holy.Size = 30
+						holy.Heat = 20
+						holy.Color = Color3.fromRGB(255,255,255)
+						coroutine.wrap(function()
+							for i = 1,120 do
+								holy.Size = holy.Size - 0.25
+								runservice.Stepped:wait()
+							end
+							holy.Enabled = false
+							wait(2)
+							holy:destroy()
+						end)()
+					end
+					chargesound:Stop()
+					while runservice.Stepped:wait() and clicked do end	
+					canuse = true
+				end)()
+			end
+		elseif lifecheck and lifecheck ~= "indeed" then
+			wait(0.1)
+			if clicked then
+				canuse = false
+				chargesound.PlaybackSpeed = 1
+				chargesound:Play()
+				coroutine.wrap(function()
+					local chargiin = true
+					coroutine.wrap(function()
+						while clicked and equipped and chargiin and wait(0.1) do
+							local exblock = Instance.new("UnionOperation", charhum)
+							Instance.new("BlockMesh", exblock)
+							exblock.BrickColor = BrickColor.new("New Yeller")
+							exblock.Anchored = true
+							exblock.CanCollide = false
+							exblock.Material = "Neon"
+							exblock.Transparency = 0.5
+							exblock.CFrame = CFrame.new(handle.Position)
+							exblock.Size = Vector3.new(6,6,6)
+							coroutine.wrap(function()
+								for i = 1,20 do
+									exblock.Size = exblock.Size - Vector3.new(0.2,0.2,0.2)
+									exblock.Transparency = exblock.Transparency + 0.015
+									exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/3,math.random(-10,10)/3,math.random(-10,10)/3)
+									runservice.Stepped:wait()
+								end
+								exblock:destroy()
+							end)()
+						end
+					end)()
+					for i = 1,300 do
+						if clicked and equipped then
+							chargesound.PlaybackSpeed = chargesound.PlaybackSpeed - 0.0025
+							runservice.Stepped:wait()
+						end
+					end
+					chargiin = false
+					if clicked and equipped then
+						lifecheck = "indeed"
+						if workspace:findFirstChild("omg"..string.lower(owner.Name)) then workspace:findFirstChild("omg"..string.lower(owner.Name)):destroy() end
+						music.TimePosition = 0
+						music.SoundId = "rbxassetid://295754240"
+						lasersound:Play()
+						for i,v in pairs(tool:GetDescendants()) do
+							if v.ClassName == "Part" then
+								local mesh = Instance.new("BlockMesh", v)
+								mesh.Scale = Vector3.new(2.5,2.5,2.5)
+								handle2weld.C0 = CFrame.new(2,0,0)
+								shineyweld.C0 = CFrame.new(0,0.5,0)
+								shiney2weld.C0 = CFrame.new(0,0.5,0)
+							end
+						end
+						local holy = Instance.new("Fire", handle)
+						holy.Size = 30
+						holy.Heat = 20
+						holy.Color = Color3.fromRGB(255,255,0)
+						coroutine.wrap(function()
+							for i = 1,120 do
+								holy.Size = holy.Size - 0.25
+								runservice.Stepped:wait()
+							end
+							holy.Enabled = false
+							wait(2)
+							holy:destroy()
+						end)()
+						anim = "idle"
+						local rightgrip = ownercharacter["Right Arm"]:WaitForChild("RightGrip")
+						local rightarm = Instance.new("Weld", ownercharacter.Torso)
+						rightarm.Part0 = ownercharacter.Torso
+						rightarm.Part1 = ownercharacter["Right Arm"]
+						rightarm.C0 = CFrame.new(1.5,0,0)
+						rightarm.Name = "RightArmWeldcross"
+						local leftarm = Instance.new("Weld", ownercharacter.Torso)
+						leftarm.Part0 = ownercharacter.Torso
+						leftarm.Part1 = ownercharacter["Left Arm"]
+						leftarm.C0 = CFrame.new(-1.5,0,0)
+						leftarm.Name = "LeftArmWeldcross"
+						local head = Instance.new("Weld", ownercharacter.Torso)
+						head.Part0 = ownercharacter.Torso
+						head.Part1 = ownercharacter.Head
+						head.C0 = CFrame.new(0,1.5,0)
+						head.Name = "HeadWeldcross"
+						local humanoidrootpart = Instance.new("Weld", ownercharacter.HumanoidRootPart)
+						humanoidrootpart.Part0 = ownercharacter.HumanoidRootPart
+						humanoidrootpart.Part1 = ownercharacter.Torso
+						humanoidrootpart.Name = "HumanoidRootPartWeldcross"
+						coroutine.wrap(function()
+							while equipped and lifecheck == "indeed" and runservice.Stepped:wait() do
+								if cananimate then
+									local absvel = rootpart.CFrame:vectorToObjectSpace(rootpart.Velocity)
+									if anim == "idle" then
+										rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.248357773, -1.15785217, -0.660198212, -0.0234374851, 0.959914804, 0.279310286, -0.963011563, 0.053340286, -0.264121324, -0.268436849, -0.275169849, 0.923155606),0.15)
+										rightarm.C0 = rightarm.C0:lerp(CFrame.new(0.874992371, 0.141008854, -0.596240997, 0.50000006, 0.750001609, 0.433009773, -0.150381878, 0.567591846, -0.809459567, -0.852868795, 0.33961302, 0.396582663),0.15)
+										leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.2557373, -0.044418335, -0.835590363, 0.934456587, -0.2350021, -0.267516464, -0.0593904369, 0.637900949, -0.767825007, 0.351089478, 0.733386993, 0.58213377),0.15)
+										humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.984807849, 0, 0.173648179, 0, 1, 0, -0.173648193, 0, 0.984807849) * CFrame.fromEulerAnglesXYZ(absvel.z/100,0,-absvel.x/100),0.15)
+										head.C0 = head.C0:lerp(CFrame.new(0, 1.49998355, 0, 0.984807789, 0, -0.173648179, 0, 1, 0, 0.173648179, 0, 0.984807789),0.15)
+										runservice.Stepped:wait()
+									elseif anim == "scope" then
+										rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.248357773, -1.15785217, -0.660198212, -0.0234374851, 0.959914804, 0.279310286, -0.963011563, 0.053340286, -0.264121324, -0.268436849, -0.275169849, 0.923155606),0.15)
+										rightarm.C0 = rightarm.C0:lerp(CFrame.new(0.809280396, 0.364839554, -0.920059204, 0.191511169, 0.972948372, 0.12920922, -0.116976522, 0.153333753, -0.981226504, -0.974494755, 0.17280136, 0.143177241),0.15)
+										leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.49999619, 0.41317153, -0.492401123, 1, 0, 0, 0, 0.173646122, -0.984808087, 0, 0.984808207, 0.173646107),0.15)
+										humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.173648149, 0, -0.984807849, 0, 1, 0, 0.984807849, 0, 0.173648134),0.15)
+										head.C0 = head.C0:lerp(CFrame.new(0, 1.49998379, 0, 0.173648149, 0, 0.984807789, 0, 1, 0, -0.984807789, 0, 0.173648149),0.15)
+										runservice.Stepped:wait()
+									elseif anim == "shoot" then
+										rightgrip.C0 = rightgrip.C0:lerp(CFrame.new(-0.248357773, -1.15785217, -0.660198212, -0.0234374851, 0.959914804, 0.279310286, -0.963011563, 0.053340286, -0.264121324, -0.268436849, -0.275169849, 0.923155606),0.15)
+										rightarm.C0 = rightarm.C0:lerp(CFrame.new(0.921146393, 1.04831123, -0.980117798, 0.191510394, 0.724376798, -0.662268221, -0.116975948, -0.653091669, -0.748176575, -0.974494457, 0.220755547, -0.0403396413),0.15)
+										leftarm.C0 = leftarm.C0:lerp(CFrame.new(-1.65689468, 0.365976334, 0.224777222, 0.499998748, 0.813797832, 0.296194881, -0.150380298, 0.418411076, -0.895711064, -0.852868319, 0.403317034, 0.33158794),0.15)
+										humanoidrootpart.C0 = humanoidrootpart.C0:lerp(CFrame.new(0, 0, 0, 0.163175866, 0.0593911558, -0.98480773, -0.342016339, 0.939682305, 0, 0.925416529, 0.336824059, 0.173648134),0.15)
+										head.C0 = head.C0:lerp(CFrame.new(-0.16840744, 1.46983147, -0.0297012329, 0.173647925, -0.336824208, 0.925416589, 6.14207295e-07, 0.939692736, 0.342020094, -0.984807849, -0.0593905188, 0.163175866),0.15)
+										runservice.Stepped:wait()
+									end
+								end
+							end
+							rightarm:destroy()
+							leftarm:destroy()
+							head:destroy()
+							humanoidrootpart:destroy()
+						end)()
+					end
+					chargesound:Stop()
+					while runservice.Stepped:wait() and clicked do end	
+					canuse = true
+				end)()
+			end
+		elseif lifecheck == "indeed" then
+			wait(0.1)
+			if clicked then
+				canuse = false
+				chargesound.PlaybackSpeed = 1
+				chargesound:Play()
+				coroutine.wrap(function()
+					local chargiin = true
+					coroutine.wrap(function()
+						while clicked and equipped and chargiin and wait(0.1) do
+							local exblock = Instance.new("UnionOperation", charhum)
+							Instance.new("BlockMesh", exblock)
+							exblock.BrickColor = BrickColor.new("New Yeller")
+							exblock.Anchored = true
+							exblock.CanCollide = false
+							exblock.Material = "Neon"
+							exblock.Transparency = 0.5
+							exblock.CFrame = CFrame.new(handle.Position)
+							exblock.Size = Vector3.new(10,10,10)
+							coroutine.wrap(function()
+								for i = 1,20 do
+									exblock.Size = exblock.Size - Vector3.new(0.2,0.2,0.2)
+									exblock.Transparency = exblock.Transparency + 0.015
+									exblock.CFrame = exblock.CFrame * CFrame.fromEulerAnglesXYZ(math.random(-10,10)/3,math.random(-10,10)/3,math.random(-10,10)/3)
+									runservice.Stepped:wait()
+								end
+								exblock:destroy()
+							end)()
+						end
+					end)()
+					for i = 1,300 do
+						if clicked and equipped then
+							chargesound.PlaybackSpeed = chargesound.PlaybackSpeed - 0.0025
+							runservice.Stepped:wait()
+						end
+					end
+					chargiin = false
+					if clicked and equipped then
+						lifecheck = false
+						if workspace:findFirstChild("omg"..string.lower(owner.Name)) then workspace:findFirstChild("omg"..string.lower(owner.Name)):destroy() end
+						music.TimePosition = 0
+						music.SoundId = "rbxassetid://4361093477"
+						lasersound:Play()
+						for i,v in pairs(tool:GetDescendants()) do
+							if v.ClassName == "BlockMesh" then
+								v:destroy()
+							end
+							if v.ClassName == "Part" then
+								if v.Material == Enum.Material.Neon then
+									v.Material = "Plastic"
+									v.Reflectance = 1
+								end
+							end
+						end
+						local holy = Instance.new("Fire", handle)
+						holy.Size = 30
+						holy.Heat = 20
+						holy.Color = Color3.fromRGB(255,255,255)
+						coroutine.wrap(function()
+							for i = 1,120 do
+								holy.Size = holy.Size - 0.25
+								runservice.Stepped:wait()
+							end
+							holy.Enabled = false
+							wait(2)
+							holy:destroy()
+						end)()
+						shiney2weld.C0 = shiney2c0
+						shineyweld.C0 = shineyc0
+						handle2weld.C0 = handle2c0
+						ownercharacter["Right Arm"]:WaitForChild("RightGrip"):destroy()
+						local rightgrip = Instance.new("Weld", ownercharacter["Right Arm"])
+						rightgrip.Part0 = ownercharacter["Right Arm"]
+						rightgrip.Part1 = handle
+						rightgrip.Name = "RightGrip"
+						rightgrip.C0 = CFrame.new(-0.0231323242, -0.962421417, -1.0267334, 0, 0, -1, 0, -0.999994457, 0, -1, 0, 0)
+					end
+					chargesound:Stop()
+					while runservice.Stepped:wait() and clicked do end	
+					canuse = true
+				end)()
+			end
+		end
+	end
+end)
+end)()
+Tool0.Parent = owner.Character
