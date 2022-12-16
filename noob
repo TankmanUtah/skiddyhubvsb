@@ -1,0 +1,148 @@
+-- Converted using Mokiros's Model to Script plugin
+-- Converted string size: 1726
+local genv={}
+Decode =  function(str,t,props,classes,values,ICList,Model,CurPar,LastIns,split,RemoveAndSplit,InstanceList)
+    local tonum,table_remove,inst,parnt,comma,table_foreach = tonumber,table.remove,Instance.new,"Parent",",",
+	function(t,f)
+		for a,b in pairs(t) do
+			f(a,b)
+		end
+	end
+	local Types = {
+		Color3 = Color3.new,
+		Vector3 = Vector3.new,
+		Vector2 = Vector2.new,
+		UDim = UDim.new,
+		UDim2 = UDim2.new,
+		CFrame = CFrame.new,
+		Rect = Rect.new,
+		NumberRange = NumberRange.new,
+		BrickColor = BrickColor.new,
+		PhysicalProperties = PhysicalProperties.new,
+		NumberSequence = function(...)
+			local a = {...}
+			local t = {}
+			repeat
+				t[#t+1] = NumberSequenceKeypoint.new(table_remove(a,1),table_remove(a,1),table_remove(a,1))
+			until #a==0
+			return NumberSequence.new(t)
+		end,
+		ColorSequence = function(...)
+			local a = {...}
+			local t = {}
+			repeat
+				t[#t+1] = ColorSequenceKeypoint.new(table_remove(a,1),Color3.new(table_remove(a,1),table_remove(a,1),table_remove(a,1)))
+			until #a==0
+			return ColorSequence.new(t)
+		end,
+		number = tonumber,
+		boolean = function(a)
+			return a=="1"
+		end
+	}
+    split = function(str,sep)
+		if not str then return end
+		local fields = {}
+		local ConcatNext = false
+		str:gsub(("([^%s]+)"):format(sep),function(c)
+			if ConcatNext == true then
+				fields[#fields] = fields[#fields]..sep..c
+				ConcatNext = false
+			else
+				fields[#fields+1] = c
+			end
+			if c:sub(#c)=="\\" then
+				c = fields[#fields]
+				fields[#fields] = c:sub(1,#c-1)
+				ConcatNext = true
+			end
+		end)
+		return fields
+    end
+ 	RemoveAndSplit = function(t)
+		return split(table_remove(t,1),comma)
+	end
+    t = split(str,";")
+    props = RemoveAndSplit(t)
+    classes = RemoveAndSplit(t)
+	values = split(table_remove(t,1),'|')
+	ICList = RemoveAndSplit(t)
+	InstanceList = {}
+    Model = inst"Model"
+    CurPar = Model
+    table_foreach(t,function(ct,c)
+        if c=="n" or c=="p" then
+            CurPar = c=="n" and LastIns or CurPar[parnt]
+        else
+            ct = split(c,"|")
+			local class = classes[tonum(table_remove(ct,1))]
+			if class=="UnionOperation" then
+				LastIns = {UsePartColor="1"}
+			else
+            	LastIns = inst(class)
+				if LastIns:IsA"Script" then
+					s(LastIns)
+				elseif LastIns:IsA("ModuleScript") then
+					ms(LastIns)
+	            end
+			end
+			
+			local function SetProperty(LastIns,p,str,s)
+				s = Types[typeof(LastIns[p])]
+				if p=="CustomPhysicalProperties" then
+					s = PhysicalProperties.new
+				end
+				if s then
+					LastIns[p] = s(unpack(split(str,comma)))
+				else
+					LastIns[p] = str
+				end
+			end
+ 			
+			local UnionData
+            table_foreach(ct,function(s,p,a,str)
+                a = p:find":"
+                p,str = props[tonum(p:sub(1,a-1))],values[tonum(p:sub(a+1))]
+				if p=="UnionData" then
+					UnionData = split(str," ")
+					return
+				end
+				if class=="UnionOperation" then
+					LastIns[p] = str
+					return
+				end
+				SetProperty(LastIns,p,str)
+            end)
+
+			if UnionData then
+				local LI_Data = LastIns
+				LastIns = DecodeUnion(UnionData)
+				table_foreach(LI_Data,function(p,str)
+					SetProperty(LastIns,p,str)
+				end)
+			end
+			table.insert(InstanceList,LastIns)
+            LastIns[parnt] = CurPar
+        end
+    end)
+	table_remove(ICList,1)
+	table_foreach(ICList,function(a,b)
+		b = split(b,">")
+		InstanceList[tonum(b[1])][props[tonum(b[2])]] = InstanceList[tonum(b[3])]
+	end)
+ 
+    return Model:GetChildren()
+end
+
+local Objects = Decode('Name,Color,Position,Orientation,Size,TopSurface,Scale,Texture,LeftSurface,RightSurface,Rotation,CFrame,C0,C1,Part0,Part1,Attachment0,Attachment1,BottomSurface;Part,Model,SpecialMesh,Decal,Attachment,S'
+..'nap,BallSocketConstraint;Part|Noob|Head|0.9607,0.8039,0.1882|7.5973,68.542,-46.4|0,-180,0|2,1,1|0|1.25,1.25,1.25|http://www.roblox.com/asset/?id=8056256|Torso|0.0509,0.4117,0.6745|7.5973,67.042,-46.4|'
+..'2,2,1|2|Attachment1|0.5,-1,0|0.0087,-0.0001,90|0.5,-1,0,-0.0001,-1,-0.0001,1,-0.0001,-0.0002,0.0001,-0.0001,1|-0.5,-1,0|-0.5,-1,0,-0.0001,-1,-0.0001,1,-0.0001,-0.0002,0.0001,-0.0001,1|1,1,0|-0.0088,17'
+..'9.9999,0|-179.9913,0,-180|1,1,0,-1,0,0,0,1,0.0001,-0.0001,0.0001,-1|-1,1,0|0.0087,-0.0001,-0.0001|-1,1,0,1,0,-0.0001,-0.0001,1,-0.0002,0,0.0001,1|0,1,0,-1,0,0,0,0,1,0,1,-0|0,-0.5,0,-1,0,0,0,0,1,0,0.99'
+..'99,-0.0001|Left Arm|9.0971,67.0422,-46.4002|-0.01,0,0|1,2,1|Attachment0|-0.5,1,0|-0,180,0|-180,0,-180|-0.5,1,0,-1,0,0,0,1,0,0,0,-1|Right Arm|6.0976,67.0421,-46.4002|0.0099,-180,0|Left Leg|0.6431,0.741'
+..'1,0.2784|8.0973,65.0423,-46.3998|0,1,0|0,0,90|0,1,0,0,-1,0,1,0,-0,0,0,1|Right Leg|7.0975,65.0423,-46.3998;0,10>15>5,10>16>2,13>17>12,13>18>9,16>17>15,16>18>8,19>17>18,19>18>7,22>17>21,22>18>6;2|1:2;n;'
+..'1|1:3|2:4|3:5|4:6|5:7|6:8|2:4|2:4;n;3|7:9;4|8:10;p;1|1:11|2:12|3:13|4:6|5:14|9:15|10:15|2:12|2:12;n;5|1:16|3:17|4:18|11:18|12:19;5|1:16|3:20|4:18|11:18|12:21;5|1:16|3:22|4:23|11:24|12:25;5|1:16|3:26|4'
+..':27|11:27|12:28;6|13:29|14:30;p;1|1:31|2:4|3:32|4:33|5:34|2:4|2:4;n;5|1:35|3:36|4:37|11:38|12:39;7;p;1|1:40|2:4|3:41|4:42|5:34|2:4|2:4;n;5|1:35|3:36|4:37|11:38|12:39;7;p;1|1:43|2:44|3:45|4:42|5:34|19:'
+..'8|2:44|2:44;n;5|1:35|3:46|4:47|11:47|12:48;7;p;1|1:49|2:44|3:50|4:42|5:34|19:8|2:44|2:44;n;5|1:35|3:46|4:47|11:47|12:48;7;p;p;')
+for _,Object in pairs(Objects) do
+	Object.Parent = script and script.Parent==workspace and script or workspace
+end
